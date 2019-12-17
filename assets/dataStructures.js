@@ -203,6 +203,16 @@ var activityList = [
    }
 ]; 
 
+function getActivityCategories () {
+
+   var catList = []; 
+   for (i=0; i<activityList.length; i++){
+      if (catList.indexOf (activityList[i].category) == -1){
+         catList.push (activityList[i].category); 
+      }
+   }
+   return catList; 
+}
 /*
 
    {

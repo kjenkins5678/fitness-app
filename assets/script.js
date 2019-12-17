@@ -9,7 +9,9 @@
 
 function init () {
 
-   console.log (JSON.stringify(activityList)); 
+   var catList = getActivityCategories();
+   console.log (catList); 
+   
 
 
 };
