@@ -9,9 +9,10 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-   <title>Day Planner</title>
+   <title>Fitness App</title>
 
    <!--css links-->
+   <link rel="stylesheet" type="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/popper.min.js">
    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <link rel="stylesheet" type="text/css" href="./assets/style.css">
@@ -22,18 +23,131 @@
 <!-- **************************************** -->
 <body>
 
-  <div>
+   <div class="container">
+   <!--<div class="container-fixed">-->
 
+      <!--jumbotron-->
+      <div class="jumbotron">
+         <h3 class="text-left">
+            Enter Your Macro Attributes
+         </h3>
 
+         <hr>
 
+         <div class="row" id="inputText">
+            <input class="ipTextCol col" type="text" id="ageInput" placeholder="age">
+            <input class="ipTextCol col" type="text" id="heightInput" placeholder="height">
+            <input class="ipTextCol col" type="text" id="weightInput" placeholder="weight">
+         </div>
 
-  </div>
+         <div class="row">
+         <div class="form-group col-lg-4">
+            <label for="genderInput">Gender:</label>
+            <select class="form-control" id="genderInput">
+               <option>Female</option>
+               <option>Male</option>
+            </select>
+         </div>
 
+         <div class="form-group col-lg-4">
+            <label for="activityLevelInput">Activity Level:</label>
+            <select class="form-control" id="activityLevelInput">
+               <option>Sedentary</option>
+               <option>Moderate</option>
+               <option>Vigorous</option>
+            </select>
+         </div>
 
+         <div class="form-group col-lg-4">
+            <label for="goalInput">Goal:</label>
+            <select class="form-control" id="goalInput">
+               <option>Lose Weight</option>
+               <option>Gain</option>
+               <option>Recomp</option>
+            </select>
+         </div>
+         </div> <!--jumbotron row for dropdowns-->
 
+         <button class="btn btn-info" type="button" id ="calculateButton">
+            Calculate
+         </button>
 
+<!--<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>-->
 
+      </div> <!--jumbotron-->
 
+      <!-- **************************************
+           exercise box and target macro values
+      ****************************************-->
+      <div class="row" id="exerciseAndTargetsRow">
+         <div class="col-lg-4">
+            <div id="exerciseBox"></div>
+         </div>
+
+         <div class="col-lg-2">
+            <h5>Fat</h5>
+            <img src="./assets/img/fat.png" alt="image not found">
+            <h5 id="target-fat-gpd">99.9</h5>
+            <h5 class="gpdText">grams per day</h5 class="gpdText">
+         </div>
+         <div class="col-lg-2">
+            <h5>Carbs</h5>
+            <img src="./assets/img/carbohydrates.png" alt="image not found">
+            <h5 id="target-carbs-gpd">99.9</h5>
+            <h5 class="gpdText">grams per day</h5 class="gpdText">
+         </div>
+         <div class="col-lg-2">
+            <h5>Protein</h5>
+            <img src="./assets/img/protein.png" alt="image not found">
+            <h5 id="target-protein-gpd">999.9</h5>
+            <h5 class="gpdText">grams per day</h5 class="gpdText">
+         </div>
+         <div class="col-lg-2">
+            <h5>Calories</h5>
+            <img src="./assets/img/calories.png" alt="image not found">
+            <h5 id="target-calories-gpd">9999</h5>
+            <h5 class="gpdText">grams per day</h5 class="gpdText">
+         </div>
+      </div> <!--exerciseAndTargetsRow-->
+
+      <!-- **************************************
+           nutrition box and actual macro values
+      ****************************************-->
+      <div class="row" id="foodAndActualsRow">
+         <div class="col-lg-4">
+
+            <div id="foodBox"></div>
+
+         </div>
+
+         <div class="col-lg-2">
+            <h5>Fat</h5>
+            <img src="./assets/img/fat.png" alt="image not found">
+            <h5 id="actual-fat-gpd">99.9</h5>
+            <h5 class="gpdText">grams per day</h5 class="gpdText">
+         </div>
+         <div class="col-lg-2">
+            <h5>Carbs</h5>
+            <img src="./assets/img/carbohydrates.png" alt="image not found">
+            <h5 id="actual-fat-gpd">99.9</h5>
+            <h5 class="gpdText">grams per day</h5>
+         </div>
+         <div class="col-lg-2">
+            <h5>Protein</h5>
+            <img src="./assets/img/protein.png" alt="image not found">
+            <h5 id="actual-fat-gpd">99.9</h5>
+            <h5 class="gpdText">grams per day</h5 class="gpdText">
+         </div>
+         <div class="col-lg-2">
+            <h5>Calories</h5>
+            <img src="./assets/img/calories.png" alt="image not found">
+            <h5 id="actual-fat-gpd">99.9</h5>
+            <h5 class="gpdText">grams per day</h5 class="gpdText">
+         </div>
+
+      </div> <!--foodAndActualsRow-->
+
+  </div> <!--container-->
 
    <!--**************************************-->
    <!--js links-->
