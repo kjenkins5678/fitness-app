@@ -15,6 +15,9 @@ var heightCM = 0;
 var weightKG = 0; 
 var calsPerDay = 0; 
 var tdee = 0; 
+var fatPerDay = 0;
+var carbsPerDay = 0; 
+var proteinPerDay = 0;
 
 var targetFatGPDElem = $("#target-fat-gpd"); 
 var targetCarbsGPDElem = $("#target-carbs-gpd"); 
@@ -88,20 +91,43 @@ function calculateCalsPerDay() {
 function calculateMacros (){
 
    calculateCalsPerDay(); 
+
    switch(activityLevelInputElem.val()){
-      case 'Sedentary':
-         tdee = calsPerDay * 1.2; 
-         break; 
-      case 'Moderate':
-         tdee = calsPerDay * 1.55 
-         break; 
-      case 'Vigorous':
-         tdee = calsPerDay * 1.725; 
-         break; 
-      default: 
-         tdee = calsPerDay * 1.2; 
-         break; 
+   case 'Sedentary':
+      tdee = calsPerDay * 1.2; 
+      break; 
+   case 'Moderate':
+      tdee = calsPerDay * 1.55 
+      break; 
+   case 'Vigorous':
+      tdee = calsPerDay * 1.725; 
+      break; 
+   default: 
+      tdee = calsPerDay * 1.2; 
+      break; 
    };
+   tdee = Math.round(tdee); 
+
+   switch(goalInputElem.val()){
+   case "Lose Weight":
+      fatPerDay = tdee * .3;
+      carbsPerDay = tdee * .35;
+      proteinPerDay = carbsPerDay;
+      break;
+   case "Gain":
+      fatPerDay = tdee * .2;
+      carbsPerDay = tdee * .5;
+      proteinPerDay = tdee * .3;
+      break;
+   case "Recomp":
+      fatPerDay = tdee * .33;
+      carbsPerDay = tdee * .33;
+      proteinPerDay = tdee * .34;
+      break;
+   }
+   fatPerDay = Math.round (fatPerDay / 4); 
+   carbsPerDay = Math.round (carbsPerDay / 4); 
+   proteinPerDay = Math.round (proteinPerDay / 4);
 
    alert ("age " + ageInputElem.val() 
       + " height " + heightInputElem.val()
@@ -110,7 +136,15 @@ function calculateMacros (){
       + " act level " + activityLevelInputElem.val()
       + " goal " + goalInputElem.val()
       + " cpd " + calsPerDay
-      + " tdee " + tdee); 
+      + " tdee " + tdee
+      + " fpd " + fatPerDay
+      + " ppd " + proteinPerDay
+      + " cpd " + carbsPerDay
+      ); 
+
+   targetCarbsGPDElem.text(carbsPerDay);  
+   targetProteinGPDElem.text(proteinPerDay);  
+   targetFatGPDElem.text(fatPerDay); 
 
 } // calculateMacros
 
