@@ -24,41 +24,51 @@ var targetCarbsGPDElem = $("#target-carbs-gpd");
 var targetProteinGPDElem = $("#target-protein-gpd"); 
 var targetCaloriesGPDElem = $("#target-calories-gpd"); 
 
+var errorText = $("#myModalErrorText"); 
+
 // **********************************************
 // functions
 // **********************************************
 
 // **********************************************
-// edit inputs 
+// editInputs
 // **********************************************
 
 function editInputs (){
 
    if (ageInputElem.val() == "" || ageInputElem.val() == null) {
-      alert("You must enter an age. Please retry"); 
-      return false; 
+      errorText.text("You must enter an age. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
+
    if (ageInputElem.val() <18 || ageInputElem.val() > 105) {
-      alert("Age invalid. Please retry"); 
-      return false; 
+      errorText.text("Age invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
 
    if (heightInputElem.val() == "" || heightInputElem.val() == null) {
-      alert("You must enter a height. Please retry"); 
-      return false; 
+      errorText.text("You must enter a height. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
    if (heightInputElem.val() <48 || heightInputElem.val() > 96) {
-      alert("Height invalid. Please retry"); 
-      return false; 
+      errorText.text("Height invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
 
    if (weightInputElem.val() == "" || weightInputElem.val() == null) {
-      alert("You must enter a weight. Please retry"); 
-      return false; 
+      errorText.text("You must enter a weight. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
+
    if (weightInputElem.val() <80 || weightInputElem.val() > 600) {
-      alert("Weight invalid. Please retry"); 
-      return false; 
+      errorText.text("Weight invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
 
 } // editInputs
@@ -158,6 +168,8 @@ function init () {
    var catList = getActivityCategories();
    console.log (catList); 
    
+	//$("#myModal").modal('show');
+
 }; // init 
 
 // **********************************************
