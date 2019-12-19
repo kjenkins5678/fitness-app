@@ -129,7 +129,7 @@ function calculateMacros (){
    carbsPerDay = Math.round (carbsPerDay / 4); 
    proteinPerDay = Math.round (proteinPerDay / 4);
 
-   alert ("age " + ageInputElem.val() 
+   /*alert ("age " + ageInputElem.val() 
       + " height " + heightInputElem.val()
       + " weight " + weightInputElem.val()
       + " gender " + genderInputElem.val()
@@ -141,7 +141,8 @@ function calculateMacros (){
       + " ppd " + proteinPerDay
       + " cpd " + carbsPerDay
       ); 
-
+   */
+  
    targetCarbsGPDElem.text(carbsPerDay);  
    targetProteinGPDElem.text(proteinPerDay);  
    targetFatGPDElem.text(fatPerDay); 
