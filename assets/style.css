@@ -1,0 +1,29 @@
+#inputText{
+   padding-bottom:8px; 
+}
+.ipTextCol{
+   width:100%;
+}
+.jumbotron{
+   padding-top: 2rem; 
+   padding-bottom: 2rem; 
+}
+#exerciseBox{
+   height:200px;
+   background-color: lightgray;
+}
+#foodBox{
+   height:200px;
+   background-color: lightblue;
+}
+img{
+   height:50px;
+   width:50px; 
+   margin-left:32%;
+}
+h5{
+   text-align:center;
+}
+.gpdText{
+   margin-left:5%;
+}
