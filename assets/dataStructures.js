@@ -213,6 +213,16 @@ function getActivityCategories () {
    }
    return catList; 
 }
+
+function getActivities (category){
+   var catActivityList = []; 
+   for (i=0; i<activityList.length; i++){
+      if (activityList[i].category == category && catActivityList.indexOf (activityList[i].activity) == -1){
+         catActivityList.push (activityList[i].activity); 
+      }
+   }
+   return catActivityList;
+}
 /*
 
    {

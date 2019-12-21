@@ -1,6 +1,8 @@
 // **********************************************
 // globals
 // **********************************************
+var catList; 
+
 var calculateBtnElem = $("#calculateButton"); 
 
 var ageInputElem = $("#ageInput");
@@ -24,41 +26,96 @@ var targetCarbsGPDElem = $("#target-carbs-gpd");
 var targetProteinGPDElem = $("#target-protein-gpd"); 
 var targetCaloriesGPDElem = $("#target-calories-gpd"); 
 
+var errorText = $("#myModalErrorText"); 
+
+var errorModalCloseElem = $(".error-modal-close"); 
+var addActivityButtonElem = $("#addActivityButton"); 
+var addActivityModalCloseElem = $(".activity-modal-close"); 
+var activityCategoryInputElem = $("#activityCategoryInput"); 
+var activityInputElem = $("#activityInput"); 
+var durationInputElem = $("#durationInput"); 
+
 // **********************************************
 // functions
 // **********************************************
 
 // **********************************************
-// edit inputs 
+// editActivityInputs
+// **********************************************
+
+function editActivityInputs (){
+
+   var found; 
+   
+   found = false; 
+   for (i=0;i<activityList.length; i++){
+
+      //alert ('ip ' + activityInputElem.val() + " list " + activityList[i].activity);   
+      if (activityList[i].activity == activityInputElem.val()){
+         found = true; 
+         break; 
+      }      
+   }
+   if (found == false) {
+      errorText.text("Activity is invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
+   }
+
+   //alert (durationInputElem.val()); 
+   if (durationInputElem.val()=="" || durationInputElem.val() == null){
+      errorText.text("You must enter a duration. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
+   }
+
+   if (durationInputElem.val().indexOf(":")==-1){
+      errorText.text("Duration is invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
+   }
+
+} // editActivityInputs 
+
+// **********************************************
+// editInputs
 // **********************************************
 
 function editInputs (){
 
    if (ageInputElem.val() == "" || ageInputElem.val() == null) {
-      alert("You must enter an age. Please retry"); 
-      return false; 
+      errorText.text("You must enter an age. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
+
    if (ageInputElem.val() <18 || ageInputElem.val() > 105) {
-      alert("Age invalid. Please retry"); 
-      return false; 
+      errorText.text("Age invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
 
    if (heightInputElem.val() == "" || heightInputElem.val() == null) {
-      alert("You must enter a height. Please retry"); 
-      return false; 
+      errorText.text("You must enter a height. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
    if (heightInputElem.val() <48 || heightInputElem.val() > 96) {
-      alert("Height invalid. Please retry"); 
-      return false; 
+      errorText.text("Height invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
 
    if (weightInputElem.val() == "" || weightInputElem.val() == null) {
-      alert("You must enter a weight. Please retry"); 
-      return false; 
+      errorText.text("You must enter a weight. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
+
    if (weightInputElem.val() <80 || weightInputElem.val() > 600) {
-      alert("Weight invalid. Please retry"); 
-      return false; 
+      errorText.text("Weight invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
    }
 
 } // editInputs
@@ -155,13 +212,19 @@ function calculateMacros (){
 
 function init () {
 
-   var catList = getActivityCategories();
+   catList = getActivityCategories();
    console.log (catList); 
    
+	//$("#myModal").modal('show');
+
 }; // init 
 
 // **********************************************
 // listeners
+// **********************************************
+
+// **********************************************
+// calculate button  
 // **********************************************
 
 calculateBtnElem.on("click", function () {
@@ -174,6 +237,67 @@ calculateBtnElem.on("click", function () {
    calculateMacros();
 
 }); 
+
+// **********************************************
+// experiment with closing a modal 
+// **********************************************
+
+errorModalCloseElem.on("click", function () {
+
+   //alert ("errorModalCloseElem"); 
+
+}); 
+
+// **********************************************
+// open activity add modal  
+// **********************************************
+
+addActivityButtonElem.on("click", function () {
+
+   activityCategoryInputElem.empty(); 
+   durationInputElem.empty();
+   activityInputElem.empty(); 
+
+   //alert ("add activity"); 
+   $("#myActivityModal").modal('show');
+
+   for (i=0;i<catList.length;i++){
+      var newOption = $("<option>")
+      newOption.text(catList[i]); 
+      //console.log(newOption); 
+      activityCategoryInputElem.append(newOption); 
+
+   }
+
+}); 
+
+// **********************************************
+// experiment with closing a modal 
+// **********************************************
+
+addActivityModalCloseElem.on("click", function () {
+
+   //console.log ("user hit OK on activity modal");
+   editActivityInputs(); 
+
+}); 
+
+activityCategoryInputElem.on("change", function (){
+
+   activityInputElem.empty(); 
+
+   //alert ("ok, category selected " + activityCategoryInputElem.val()); 
+   var catActivityList = getActivities(activityCategoryInputElem.val()); 
+   console.log (catActivityList); 
+
+   for (i=0;i<catActivityList.length;i++){
+      var newOption = $("<option>")
+      newOption.text(catActivityList[i]); 
+      //console.log(newOption); 
+      activityInputElem.append(newOption); 
+
+   }
+});
 
 // **********************************************
 // main

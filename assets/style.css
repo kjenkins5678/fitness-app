@@ -8,13 +8,11 @@
    padding-top: 2rem; 
    padding-bottom: 2rem; 
 }
-#exerciseBox{
+#exerciseBox, #foodBox{
+   border: 1px solid black;
+   border-radius: 25px;
    height:200px;
-   background-color: lightgray;
-}
-#foodBox{
-   height:200px;
-   background-color: lightblue;
+   background-color:#bbeff7;
 }
 img{
    height:50px;
@@ -26,4 +24,8 @@ h5{
 }
 .gpdText{
    margin-left:5%;
+}
+#durationInput{
+   margin-top:5px;  
+   width:100px; 
 }
