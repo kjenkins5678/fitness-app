@@ -203,6 +203,9 @@ var activityList = [
    }
 ]; 
 
+// **********************************************
+// **********************************************
+
 function getActivityCategories () {
 
    var catList = []; 
@@ -214,6 +217,9 @@ function getActivityCategories () {
    return catList; 
 }
 
+// **********************************************
+// **********************************************
+
 function getActivities (category){
    var catActivityList = []; 
    for (i=0; i<activityList.length; i++){
@@ -223,6 +229,75 @@ function getActivities (category){
    }
    return catActivityList;
 }
+
+// **********************************************
+// convert hh:mm or :mm string to number of minutes 
+// **********************************************
+
+function getNumHours (durationStr){
+
+   var colonPos = durationStr.indexOf(":");
+   if (colonPos==null || colonPos < 0){
+      return -1; 
+   }
+   // no hour entered, return 0
+   if (colonPos == 0) {
+      return 0; 
+   }
+
+   var numHours = durationStr.slice(0,colonPos);
+   return numHours; 
+
+}
+
+function getNumMinutes (durationStr){
+
+   var colonPos = durationStr.indexOf(":");
+   if (colonPos==null || colonPos < 0){
+      return -1; 
+   }
+   var numMinutes = durationStr.slice (colonPos + 1); 
+   return numMinutes; 
+}
+
+// **********************************************
+// convert number of minutes to hh:mm or :mm string 
+// **********************************************
+
+function convertMinutesToDuration (totalMinutes){
+
+   var durationStr = "";  
+
+   var numHours = parseInt (totalMinutes / 60);
+   var numMinutes = parseInt(totalMinutes % 60);
+
+   //alert ('h ' + numHours + ' m ' + numMinutes); 
+
+   if (numHours == 0){
+      durationStr = ':' + numMinutes;
+   }
+   else {
+      durationStr = numHours + ":" + numMinutes;   
+   }
+   return durationStr; 
+} // convertMinutesToDuration
+
+// **********************************************
+// convert hh:mm or :mm string to number of minutes 
+// **********************************************
+
+function convertDurationToMinutes (durationStr){
+
+   var totalMinutes = 0; 
+
+   var numHours = getNumHours(durationStr);
+   var numMinutes = getNumMinutes(durationStr); 
+   //alert ('h ' + numHours + ' m ' + numMinutes); 
+
+   totalMinutes = parseInt ((numHours * 60)) + parseInt (numMinutes); 
+   return totalMinutes; 
+} // convertDurationToMinutes
+
 /*
 
    {

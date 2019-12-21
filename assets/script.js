@@ -54,7 +54,7 @@ function editActivityInputs (){
       if (activityList[i].activity == activityInputElem.val()){
          found = true; 
          break; 
-      }      
+      } 
    }
    if (found == false) {
       errorText.text("Activity is invalid. Please retry"); 
@@ -62,15 +62,31 @@ function editActivityInputs (){
       return false;
    }
 
+   var durationStr = durationInputElem.val().trim (); 
+
    //alert (durationInputElem.val()); 
-   if (durationInputElem.val()=="" || durationInputElem.val() == null){
+   if (durationStr =="" || durationStr == null){
       errorText.text("You must enter a duration. Please retry"); 
       $("#myModal").modal('show');
       return false;
    }
 
-   if (durationInputElem.val().indexOf(":")==-1){
-      errorText.text("Duration is invalid. Please retry"); 
+   if (durationStr.indexOf(":")==-1){
+      errorText.text("Duration must be in hh:mm or :mm format. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
+   }
+
+   var numHours = getNumHours(durationStr);
+   if (isNaN(numHours) || numHours > 24){
+      errorText.text("Duration hours is invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
+   }
+
+   var numMinutes = getNumMinutes(durationStr);
+   if (isNaN(numMinutes) || numMinutes <0 || numMinutes > 59){
+      errorText.text("Duration minutes is invalid. Please retry"); 
       $("#myModal").modal('show');
       return false;
    }
@@ -277,8 +293,12 @@ addActivityButtonElem.on("click", function () {
 
 addActivityModalCloseElem.on("click", function () {
 
-   //console.log ("user hit OK on activity modal");
+   console.log ("user hit OK on activity modal");
    editActivityInputs(); 
+
+   // convert duration input string to minutes 
+   var durationMin = convertDurationToMinutes(durationInputElem.val().trim()); 
+   alert (durationMin); 
 
 }); 
 
@@ -305,5 +325,6 @@ activityCategoryInputElem.on("change", function (){
 
 $(document).ready(function() {
    init ();
+   //alert (convertMinutesToDuration(255)); 
 });
 
