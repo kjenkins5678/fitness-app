@@ -25,3 +25,7 @@ h5{
 .gpdText{
    margin-left:5%;
 }
+#durationInput{
+   margin-top:5px;  
+   width:100px; 
+}

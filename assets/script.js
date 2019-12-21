@@ -1,6 +1,8 @@
 // **********************************************
 // globals
 // **********************************************
+var catList; 
+
 var calculateBtnElem = $("#calculateButton"); 
 
 var ageInputElem = $("#ageInput");
@@ -26,9 +28,54 @@ var targetCaloriesGPDElem = $("#target-calories-gpd");
 
 var errorText = $("#myModalErrorText"); 
 
+var errorModalCloseElem = $(".error-modal-close"); 
+var addActivityButtonElem = $("#addActivityButton"); 
+var addActivityModalCloseElem = $(".activity-modal-close"); 
+var activityCategoryInputElem = $("#activityCategoryInput"); 
+var activityInputElem = $("#activityInput"); 
+var durationInputElem = $("#durationInput"); 
+
 // **********************************************
 // functions
 // **********************************************
+
+// **********************************************
+// editActivityInputs
+// **********************************************
+
+function editActivityInputs (){
+
+   var found; 
+   
+   found = false; 
+   for (i=0;i<activityList.length; i++){
+
+      //alert ('ip ' + activityInputElem.val() + " list " + activityList[i].activity);   
+      if (activityList[i].activity == activityInputElem.val()){
+         found = true; 
+         break; 
+      }      
+   }
+   if (found == false) {
+      errorText.text("Activity is invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
+   }
+
+   //alert (durationInputElem.val()); 
+   if (durationInputElem.val()=="" || durationInputElem.val() == null){
+      errorText.text("You must enter a duration. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
+   }
+
+   if (durationInputElem.val().indexOf(":")==-1){
+      errorText.text("Duration is invalid. Please retry"); 
+      $("#myModal").modal('show');
+      return false;
+   }
+
+} // editActivityInputs 
 
 // **********************************************
 // editInputs
@@ -165,7 +212,7 @@ function calculateMacros (){
 
 function init () {
 
-   var catList = getActivityCategories();
+   catList = getActivityCategories();
    console.log (catList); 
    
 	//$("#myModal").modal('show');
@@ -174,6 +221,10 @@ function init () {
 
 // **********************************************
 // listeners
+// **********************************************
+
+// **********************************************
+// calculate button  
 // **********************************************
 
 calculateBtnElem.on("click", function () {
@@ -186,6 +237,67 @@ calculateBtnElem.on("click", function () {
    calculateMacros();
 
 }); 
+
+// **********************************************
+// experiment with closing a modal 
+// **********************************************
+
+errorModalCloseElem.on("click", function () {
+
+   //alert ("errorModalCloseElem"); 
+
+}); 
+
+// **********************************************
+// open activity add modal  
+// **********************************************
+
+addActivityButtonElem.on("click", function () {
+
+   activityCategoryInputElem.empty(); 
+   durationInputElem.empty();
+   activityInputElem.empty(); 
+
+   //alert ("add activity"); 
+   $("#myActivityModal").modal('show');
+
+   for (i=0;i<catList.length;i++){
+      var newOption = $("<option>")
+      newOption.text(catList[i]); 
+      //console.log(newOption); 
+      activityCategoryInputElem.append(newOption); 
+
+   }
+
+}); 
+
+// **********************************************
+// experiment with closing a modal 
+// **********************************************
+
+addActivityModalCloseElem.on("click", function () {
+
+   //console.log ("user hit OK on activity modal");
+   editActivityInputs(); 
+
+}); 
+
+activityCategoryInputElem.on("change", function (){
+
+   activityInputElem.empty(); 
+
+   //alert ("ok, category selected " + activityCategoryInputElem.val()); 
+   var catActivityList = getActivities(activityCategoryInputElem.val()); 
+   console.log (catActivityList); 
+
+   for (i=0;i<catActivityList.length;i++){
+      var newOption = $("<option>")
+      newOption.text(catActivityList[i]); 
+      //console.log(newOption); 
+      activityInputElem.append(newOption); 
+
+   }
+});
 
 // **********************************************
 // main
