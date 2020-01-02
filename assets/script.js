@@ -20,6 +20,10 @@ var tdee = 0;
 var fatPerDay = 0;
 var carbsPerDay = 0; 
 var proteinPerDay = 0;
+var actualFat = 0;
+var actualCarbs = 0;
+var actualProtein = 0;
+var actualCalories = 0;
 
 var targetFatGPDElem = $("#target-fat-gpd"); 
 var targetCarbsGPDElem = $("#target-carbs-gpd"); 
@@ -33,7 +37,9 @@ var addActivityButtonElem = $("#addActivityButton");
 var addActivityModalCloseElem = $(".activity-modal-close"); 
 var activityCategoryInputElem = $("#activityCategoryInput"); 
 var activityInputElem = $("#activityInput"); 
-var durationInputElem = $("#durationInput"); 
+var durationInputElem = $("#durationInput");
+
+var apiQueryStr = "for breakfast i ate 2 eggs, bacon, and french toast"
 
 // **********************************************
 // functions
@@ -236,6 +242,52 @@ function init () {
 }; // init 
 
 // **********************************************
+// Call Nutritionix
+// **********************************************
+
+function CallNutritionix () {
+   var settings = {
+      "url": "https://trackapi.nutritionix.com/v2/natural/nutrients",
+      "method": "POST",
+      "timeout": 0,
+      "headers": {
+        "x-app-id": "045860e3",
+        "x-app-key": "c32b88786979d5b33948d3010f469a5a",
+        "x-remote-user-id": "0",
+        "content-type": "application/json"
+      },
+      "data": JSON.stringify({"query":apiQueryStr}),
+    };
+    
+    $.ajax(settings).done(function (response) {
+
+      for (i = 0; i<response.foods.length; i++){
+
+         console.log(response.foods[i].food_name);
+
+         //Get the calories, add to actualCalories
+         actualCalories += response.foods[i].nf_calories;
+         console.log("calories: " + response.foods[i].nf_calories);
+
+         //Get the fat, add to actualFat
+         actualFat += response.foods[i].nf_total_fat;
+         console.log("fat: " + response.foods[i].nf_total_fat);
+
+         //Get the carbs, add to actualCarbs
+         actualCarbs += response.foods[i].nf_total_carbohydrate;
+         console.log("carbs: " + response.foods[i].nf_total_carbohydrate);
+
+         //Get the protein, add to actualCarbs
+         actualProtein += response.foods[i].nf_protein;
+         console.log("protein: " + response.foods[i].nf_protein);
+      };
+
+      console.log("totals: cal - " + actualCalories + " fat - " + actualFat +  " carbs - " + actualCarbs + " fat - " + actualFat);
+   
+    });
+};
+
+// **********************************************
 // listeners
 // **********************************************
 
@@ -326,5 +378,6 @@ activityCategoryInputElem.on("change", function (){
 $(document).ready(function() {
    init ();
    //alert (convertMinutesToDuration(255)); 
+   CallNutritionix();
 });
 
