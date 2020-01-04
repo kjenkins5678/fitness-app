@@ -380,7 +380,7 @@ addActivityModalCloseElem.on("click", function () {
 
    // convert duration input string to minutes 
    var durationMin = convertDurationToMinutes(durationInputElem.val().trim()); 
-   alert (durationMin); 
+   //alert (durationMin); 
 
 }); 
 

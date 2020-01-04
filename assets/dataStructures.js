@@ -330,7 +330,7 @@ function loadActivityHistory (todayOrAll, activityDay) {
 
       for (i=0; i<activityHistoryTmp.length; i++){
 
-         alert ("data " + activityHistoryTmp[i].date_added + " argument " + activityDay); 
+         //alert ("data " + activityHistoryTmp[i].date_added + " argument " + activityDay); 
 
          if (activityHistoryTmp[i].date_added == activityDay){
             activityHistory.push (activityHistoryTmp[i]);  
