@@ -269,10 +269,10 @@ function init () {
 }; // init 
 
 // **********************************************
-// Update Actuals
+// Update Actuals with Nutrition Information
 // **********************************************
 
-function UpdateActuals () {
+function UpdateActualsNutrition () {
    $("#actual-fat").text(Math.round(actualFat));
    $("#actual-carbs").text(Math.round(actualCarbs));
    $("#actual-protein").text(Math.round(actualProtein));
@@ -320,11 +320,23 @@ function CallNutritionix () {
          // console.log("protein: " + response.foods[i].nf_protein);
       };
 
-      console.log("totals: cal - " + actualCalories + " fat - " + actualFat +  " carbs - " + actualCarbs + " fat - " + actualFat);
+      // console.log("totals: cal - " + actualCalories + " fat - " + actualFat +  " carbs - " + actualCarbs + " fat - " + actualFat);
       
-      UpdateActuals();
+      UpdateActualsNutrition();
 
     });
+};
+
+// **********************************************
+// Update Actuals with Exercise Information
+// **********************************************
+
+function UpdateActualsExercise () {
+   var stored = JSON.parse(localStorage.getItem("fitness-app-activities"));
+   if (stored !== null){
+      console.log(stored[0])
+   };
+   
 };
 
 // **********************************************
