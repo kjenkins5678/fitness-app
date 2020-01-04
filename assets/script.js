@@ -273,10 +273,10 @@ function init () {
 // **********************************************
 
 function UpdateActuals () {
-   $("#actual-fat").text(actualFat);
-   $("#actual-carbs").text(actualCarbs);
-   $("#actual-protein").text(actualProtein);
-   $("#actual-calories").text(actualCalories);
+   $("#actual-fat").text(Math.round(actualFat));
+   $("#actual-carbs").text(Math.round(actualCarbs));
+   $("#actual-protein").text(Math.round(actualProtein));
+   $("#actual-calories").text(Math.round(actualCalories));
 };
 
 // **********************************************
