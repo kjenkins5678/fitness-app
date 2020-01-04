@@ -333,8 +333,17 @@ function CallNutritionix () {
 
 function UpdateActualsExercise () {
    var stored = JSON.parse(localStorage.getItem("fitness-app-activities"));
-   if (stored !== null){
-      console.log(stored[0])
+   if (stored !== null){ // do only if storage is not null
+   
+      var dt = new Date(); //get the current date
+      
+      for (i=0; i<stored.length; i++){ //iterate through the local storage list
+         
+         if (stored[i].date_added == (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear()){ //find entries that match todays date
+            console.log(parseInt(stored[i].calories_per_activity));
+            actualCalories += (parseInt(stored[i].calories_per_activity)) * -1;
+         };
+      };
    };
    
 };
@@ -473,5 +482,6 @@ $(document).ready(function() {
    init ();
    //alert (convertMinutesToDuration(255)); 
    CallNutritionix();
+   UpdateActualsExercise();
 });
 
