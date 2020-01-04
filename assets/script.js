@@ -272,6 +272,17 @@ function init () {
 }; // init 
 
 // **********************************************
+// Update Actuals
+// **********************************************
+
+function UpdateActuals () {
+   $("#actual-fat").text(actualFat);
+   $("#actual-carbs").text(actualCarbs);
+   $("#actual-protein").text(actualProtein);
+   $("#actual-calories").text(actualCalories);
+};
+
+// **********************************************
 // Call Nutritionix
 // **********************************************
 
@@ -293,27 +304,29 @@ function CallNutritionix () {
 
       for (i = 0; i<response.foods.length; i++){
 
-         console.log(response.foods[i].food_name);
+         // console.log(response.foods[i].food_name);
 
          //Get the calories, add to actualCalories
          actualCalories += response.foods[i].nf_calories;
-         console.log("calories: " + response.foods[i].nf_calories);
+         // console.log("calories: " + response.foods[i].nf_calories);
 
          //Get the fat, add to actualFat
-         actualFat += response.foods[i].nf_total_fat;
-         console.log("fat: " + response.foods[i].nf_total_fat);
+         actualFat = actualFat + response.foods[i].nf_total_fat;
+         // console.log("fat: " + response.foods[i].nf_total_fat);
 
          //Get the carbs, add to actualCarbs
          actualCarbs += response.foods[i].nf_total_carbohydrate;
-         console.log("carbs: " + response.foods[i].nf_total_carbohydrate);
+         // console.log("carbs: " + response.foods[i].nf_total_carbohydrate);
 
          //Get the protein, add to actualCarbs
          actualProtein += response.foods[i].nf_protein;
-         console.log("protein: " + response.foods[i].nf_protein);
+         // console.log("protein: " + response.foods[i].nf_protein);
       };
 
       console.log("totals: cal - " + actualCalories + " fat - " + actualFat +  " carbs - " + actualCarbs + " fat - " + actualFat);
-   
+      
+      UpdateActuals();
+
     });
 };
 
