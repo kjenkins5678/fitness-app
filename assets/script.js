@@ -41,6 +41,8 @@ var durationInputElem = $("#durationInput");
 
 var apiQueryStr = "for breakfast i ate 2 eggs, bacon, and french toast"
 
+var exerciseBoxElem = $("#exerciseBox"); 
+
 // **********************************************
 // functions
 // **********************************************
@@ -235,8 +237,36 @@ function calculateMacros (){
 function init () {
 
    catList = getActivityCategories();
-   console.log (catList); 
+   //console.log (catList); 
    
+   var dayStr = moment().format ('MM/DD/YYYY');
+   loadActivityHistory (0, dayStr); 
+   console.log (activityHistory); 
+
+   if (activityHistory.length > 0){
+
+      for (i=0; i<activityHistory.length; i++){
+
+         var myRow = $('<div class="row">'); 
+
+         var myCol = $('<div class="col-lg-4">'); 
+         myCol.text (activityHistory[i].activity); 
+         myRow.append(myCol); 
+
+         var myCol = $('<div class="col-lg-4">'); 
+         myCol.text (activityHistory[i].duration); 
+         myRow.append(myCol); 
+
+         var myCol = $('<div class="col-lg-4">'); 
+         myCol.text (activityHistory[i].calories_per_activity); 
+         myRow.append(myCol); 
+
+         exerciseBoxElem.append(myRow); 
+
+      }
+
+   }
+
 	//$("#myModal").modal('show');
 
 }; // init 

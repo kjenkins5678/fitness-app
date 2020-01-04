@@ -1,3 +1,25 @@
+// **********************************************
+// keys for localStorage
+// **********************************************
+var fa_act = "fitness-app-activities";
+
+var activityHistory = [];
+/* = [
+   // bicycling 
+   {
+      "date_added":"",
+      "datetime_added":"", 
+      "activity":"",
+      "duration":"", 
+      "met",
+      "calories_per_hour":"",
+      "calories_per_activity":""}];
+
+*/
+
+// **********************************************
+// activity "DB"
+// **********************************************
 var activityList = [
    // bicycling 
    {
@@ -34,11 +56,6 @@ var activityList = [
       "activity":"Stationary Bike - general",
       "category":"Bicycling",
       "met":"7"
-   },
-   {
-      "activity":"Unicycling",
-      "category":"Bicycling",
-      "met":"5"
    },
    // conditioning
    {
@@ -280,7 +297,7 @@ function convertMinutesToDuration (totalMinutes){
       durationStr = numHours + ":" + numMinutes;   
    }
    return durationStr; 
-} // convertMinutesToDuration
+}; // convertMinutesToDuration
 
 // **********************************************
 // convert hh:mm or :mm string to number of minutes 
@@ -298,18 +315,75 @@ function convertDurationToMinutes (durationStr){
    return totalMinutes; 
 } // convertDurationToMinutes
 
+// **********************************************
+// load activity history, pass 0 for today, 1 for all 
+// **********************************************
+
+function loadActivityHistory (todayOrAll, activityDay) {
+
+   var activityStr = localStorage.getItem (fa_act);
+   activityHistory.length = 0;
+   activityHistoryTmp = activityHistory;   
+   activityHistoryTmp = JSON.parse(activityStr); 
+
+   if (todayOrAll == 0){
+
+      for (i=0; i<activityHistoryTmp.length; i++){
+
+         alert ("data " + activityHistoryTmp[i].date_added + " argument " + activityDay); 
+
+         if (activityHistoryTmp[i].date_added == activityDay){
+            activityHistory.push (activityHistoryTmp[i]);  
+         }
+      }
+   }
+   else {
+      activityHistory = activityHistoryTmp; 
+   }
+}; // loadActivityHistory 
+
 /*
 
-   {
-      "activity":"",
-      "category":"",
-      "met":""
-   },
+var dayStr = moment().format ('MM/DD/YYYY');
 
-   {
-      "activity":"",
-      "category":"",
-      "met":""
-   }
+var myActivityObj = {
+   "date_added":"12/27/2019",
+   "datetime_added":"12/27/2019 14:00",
+   "activity":"Weight Training",
+   "duration":"90", 
+   "met":"5",
+   "calories_per_hour":"455",
+   "calories_per_activity":"682.5" 
+};
+activityHistory.push (myActivityObj);
 
-*/ 
+var myActivityObj = {
+   "date_added":"12/27/2019",
+   "datetime_added":"12/27/2019 10:45",
+   "activity":"Rowing",
+   "duration":"45", 
+   "met":"4.8",
+   "calories_per_hour":"436.8",
+   "calories_per_activity":"327.6" 
+};
+activityHistory.push (myActivityObj);
+
+var myActivityObj = {
+   "date_added":"12/26/2019",
+   "datetime_added":"12/26/2019 18:00",
+   "activity":"Bowling",
+   "duration":"120", 
+   "met":"3.8",
+   "calories_per_hour":"345.8",
+   "calories_per_activity":"691.6" 
+};
+activityHistory.push (myActivityObj);
+
+var activityStr = JSON.stringify(activityHistory); 
+console.log (activityStr); 
+localStorage.setItem(fa_act, activityStr); 
+
+*/
+
+
+
