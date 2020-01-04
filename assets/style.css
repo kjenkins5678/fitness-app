@@ -1,0 +1,31 @@
+#inputText{
+   padding-bottom:8px; 
+}
+.ipTextCol{
+   width:100%;
+}
+.jumbotron{
+   padding-top: 2rem; 
+   padding-bottom: 2rem; 
+}
+#exerciseBox, #foodBox{
+   border: 1px solid black;
+   border-radius: 25px;
+   height:200px;
+   background-color:#bbeff7;
+}
+img{
+   height:50px;
+   width:50px; 
+   margin-left:32%;
+}
+h5{
+   text-align:center;
+}
+.gpdText{
+   margin-left:5%;
+}
+#durationInput{
+   margin-top:5px;  
+   width:100px; 
+}
