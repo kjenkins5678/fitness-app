@@ -361,8 +361,6 @@ function loadActivityHistory (todayOrAll, activityDay) {
    }
 }; // loadActivityHistory 
 
-/*
-
 var dayStr = moment().format ('MM/DD/YYYY');
 
 var myActivityObj = {
@@ -401,8 +399,6 @@ activityHistory.push (myActivityObj);
 var activityStr = JSON.stringify(activityHistory); 
 console.log (activityStr); 
 localStorage.setItem(fa_act, activityStr); 
-
-*/
 
 
 
