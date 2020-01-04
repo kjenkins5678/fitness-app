@@ -322,6 +322,9 @@ function convertDurationToMinutes (durationStr){
 function loadActivityHistory (todayOrAll, activityDay) {
 
    var activityStr = localStorage.getItem (fa_act);
+   if (activityStr == null || activityStr == "") {
+      return;
+   }
    activityHistory.length = 0;
    activityHistoryTmp = activityHistory;   
    activityHistoryTmp = JSON.parse(activityStr); 
