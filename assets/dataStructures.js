@@ -223,6 +223,22 @@ var activityList = [
 // **********************************************
 // **********************************************
 
+function getActivityMET (activity) {
+
+console.log ("getActivityMET " + activity); 
+
+   for (i=0; i<activityList.length; i++){
+
+      if (activityList[i].activity == activity) {
+         return activityList[i].met; 
+      }
+
+   }
+} // getActivityMET
+
+// **********************************************
+// **********************************************
+
 function getActivityCategories () {
 
    var catList = []; 
@@ -232,7 +248,7 @@ function getActivityCategories () {
       }
    }
    return catList; 
-}
+} // getActivityCategories
 
 // **********************************************
 // **********************************************
@@ -245,7 +261,7 @@ function getActivities (category){
       }
    }
    return catActivityList;
-}
+} // getActivities
 
 // **********************************************
 // convert hh:mm or :mm string to number of minutes 
@@ -265,7 +281,7 @@ function getNumHours (durationStr){
    var numHours = durationStr.slice(0,colonPos);
    return numHours; 
 
-}
+} // getNumHours
 
 function getNumMinutes (durationStr){
 
@@ -275,7 +291,7 @@ function getNumMinutes (durationStr){
    }
    var numMinutes = durationStr.slice (colonPos + 1); 
    return numMinutes; 
-}
+} // getNumMinutes
 
 // **********************************************
 // convert number of minutes to hh:mm or :mm string 
@@ -350,8 +366,8 @@ function loadActivityHistory (todayOrAll, activityDay) {
 var dayStr = moment().format ('MM/DD/YYYY');
 
 var myActivityObj = {
-   "date_added":"12/27/2019",
-   "datetime_added":"12/27/2019 14:00",
+   "date_added":"1/4/2020",
+   "datetime_added":"1/4/2020 14:00",
    "activity":"Weight Training",
    "duration":"90", 
    "met":"5",
@@ -361,8 +377,8 @@ var myActivityObj = {
 activityHistory.push (myActivityObj);
 
 var myActivityObj = {
-   "date_added":"12/27/2019",
-   "datetime_added":"12/27/2019 10:45",
+   "date_added":"1/4/2020",
+   "datetime_added":"1/4/2020 10:45",
    "activity":"Rowing",
    "duration":"45", 
    "met":"4.8",
@@ -372,8 +388,8 @@ var myActivityObj = {
 activityHistory.push (myActivityObj);
 
 var myActivityObj = {
-   "date_added":"12/26/2019",
-   "datetime_added":"12/26/2019 18:00",
+   "date_added":"1/4/2020",
+   "datetime_added":"1/4/2020 18:00",
    "activity":"Bowling",
    "duration":"120", 
    "met":"3.8",

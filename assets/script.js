@@ -264,10 +264,7 @@ function init () {
          exerciseBoxElem.append(myRow); 
 
       }
-
    }
-
-	//$("#myModal").modal('show');
 
 }; // init 
 
@@ -375,13 +372,55 @@ addActivityButtonElem.on("click", function () {
 
 addActivityModalCloseElem.on("click", function () {
 
-   console.log ("user hit OK on activity modal");
    editActivityInputs(); 
 
    // convert duration input string to minutes 
    var durationMin = convertDurationToMinutes(durationInputElem.val().trim()); 
-   //alert (durationMin); 
 
+   console.log ("user hit OK on activity modal: activity = " + activityInputElem.val()
+      + " duration entry = " + durationInputElem.val().trim()
+      + " duration converted " + durationMin);
+
+
+   // load the object 
+
+   var dayStr = moment().format ('MM/DD/YYYY');
+   var myActivityObj = {};
+   myActivityObj.date_added = dayStr; 
+   myActivityObj.datetime_added = moment().format ('MM/DD/YYYY HH:mm:ss'); 
+   myActivityObj.activity = activityInputElem.val(); 
+   myActivityObj.duration = durationMin; 
+   myActivityObj.duration_entry = durationInputElem.val().trim(); 
+
+   myActivityObj.met = getActivityMET (myActivityObj.activity); 
+
+   var calTmp = myActivityObj.met * weightKG;
+   myActivityObj.calories_per_hour = Math.round (calTmp);  
+   myActivityObj.calories_per_activity = Math.round (calTmp * (durationMin / 60));  
+
+   console.log (myActivityObj); 
+
+   // load the page elements 
+
+   var myRow = $('<div class="row">'); 
+
+   var myCol = $('<div class="col-lg-4">'); 
+   myCol.text (activityInputElem.val()); 
+   myRow.append(myCol); 
+
+   var myCol = $('<div class="col-lg-4">'); 
+   myCol.text (durationInputElem.val().trim()); 
+   myRow.append(myCol); 
+
+   var myCol = $('<div class="col-lg-4">'); 
+   myCol.text (myActivityObj.calories_per_activity); 
+   myRow.append(myCol); 
+
+   exerciseBoxElem.append(myRow); 
+
+/* 
+   activityHistory.push (myActivityObj);
+*/
 }); 
 
 activityCategoryInputElem.on("change", function (){
