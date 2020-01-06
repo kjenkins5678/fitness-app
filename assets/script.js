@@ -151,7 +151,7 @@ function editInputs (){
 function calculateCalsPerDay() {
 
    heightCM = heightInputElem.val() * 2.54; 
-   weightKG = weightInputElem.val () * 0.453592; 
+   weightKG = weightInputElem.val () * 2.205; 
 
    calsPerDay = Math.round ((10 * weightKG) + (6.25 * heightCM) - (5 * ageInputElem.val())); 
    if (genderInputElem.val () == 'Male'){
@@ -178,7 +178,7 @@ function calculateMacros (){
       tdee = calsPerDay * 1.2; 
       break; 
    case 'Moderate':
-      tdee = calsPerDay * 1.55 
+      tdee = calsPerDay * 1.55;  
       break; 
    case 'Vigorous':
       tdee = calsPerDay * 1.725; 
