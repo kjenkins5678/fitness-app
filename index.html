@@ -87,6 +87,28 @@
    </div> <!--myModal-->
 
    <!-- *****************************************
+   modal for weather
+   *******************************************-->
+
+   <div id="myWeatherModal" class="modal fade" tabindex="-1">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Today's Weather</h5>
+               <button type="button" class="close error-modal_close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+               <p id="myWeatherModalText">placeholder text</p>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-info error-modal_close" data-dismiss="modal">Ok</button>
+            </div>
+         </div>
+      </div>
+   </div> <!--myWeatherModal-->
+
+
+   <!-- *****************************************
    main part of the body 
    *******************************************-->
 
@@ -163,6 +185,9 @@
                <i id="exerciseLabel" class="fas fa-running">Exercise</i>
                <button class="btn btn-info" type="button" id ="addActivityButton">
                   Add
+               </button>
+               <button class="btn btn-info" type="button" id ="viewWeatherButton">
+                  Forecast
                </button>
                <div class="row">
                   <div class="col-lg-6">
@@ -275,6 +300,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   <script src="./assets/location.js"></script>
    <script src="./assets/dataStructures.js"></script>
    <script src="./assets/script.js"></script>
 

@@ -38,10 +38,14 @@ var addActivityModalCloseElem = $(".activity-modal-close");
 var activityCategoryInputElem = $("#activityCategoryInput"); 
 var activityInputElem = $("#activityInput"); 
 var durationInputElem = $("#durationInput");
+var viewWeatherButtonElem = $("#viewWeatherButton"); 
 
 var apiQueryStr = "for breakfast i ate 2 eggs, bacon, and french toast"
 
 var exerciseBoxElem = $("#exerciseBox"); 
+
+var lat; 
+var lon; 
 
 // **********************************************
 // functions
@@ -270,12 +274,50 @@ function loadActivityHistoryView () {
 // **********************************************
 // **********************************************
 
+function getCurrentWeather (){
+
+   var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat="
+      + lat + "&lon=" + lon + "&units=imperial&appid=" + openWeatherKey;
+
+   console.log (queryURL); 
+
+   $.ajax({
+      url: queryURL,
+      method: "GET"
+   }).then(function(response) {
+
+      console.log ("I'm in the geCurrentWeather AJAX callback\n" + response.weather[0].description
+         + '\n curr Temp ' + Math.round (response.main.temp) 
+         + '\n min Temp ' + Math.round (response.main.temp_min) 
+         + '\n max Temp ' + Math.round (response.main.temp_max) 
+         + '\n deg ' + response.wind.deg 
+         + '\n out of ' + getCardinalDirection(response.wind.deg)
+         + '\n at ' + Math.round (response.wind.speed) + ' mph'); 
+
+   }); 
+};    
+
+// **********************************************
+// gotta have it. called by getLocation in location.js. (Theres got to be a better way to do this)
+// **********************************************
+
+function locationFound () {
+
+   lat = getLatitude ();
+   lon = getLongitude (); 
+
+   //alert ("lat " + lat + " lon " + lon); 
+   getCurrentWeather();
+
+}      
 
 // **********************************************
 // init 
 // **********************************************
 
 function init () {
+
+   getLocation(); 
 
    catList = getActivityCategories();
    //console.log (catList); 
@@ -419,6 +461,17 @@ addActivityButtonElem.on("click", function () {
    }
 
 }); 
+
+// **********************************************
+// open weather modal  
+// **********************************************
+
+viewWeatherButtonElem.on("click", function () {
+
+   //alert ("view weather"); 
+   $("#myWeatherModal").modal('show');
+
+});
 
 // **********************************************
 // experiment with closing a modal 

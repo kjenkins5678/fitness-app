@@ -2,6 +2,7 @@
 // keys for localStorage
 // **********************************************
 var fa_act = "fitness-app-activities";
+var openWeatherKey = "642722fdfe11197400af4a85e9c528a0"; 
 
 var activityHistory = [];        // all history, used to storing 
 var activityHistoryView = [];    // today only, optionally. This will be what the user sees
@@ -363,6 +364,40 @@ function loadActivityHistory (todayOrAll, activityDay) {
       activityHistoryView = activityHistory; 
    }
 }; // loadActivityHistory 
+
+// **********************************************
+// this is related to the openWeather data
+// **********************************************
+
+function getCardinalDirection (deg){
+   if (deg >= 000 && deg <= 020){
+      return 'N';
+   }
+   else if (deg >= 021 && deg <= 070){
+      return 'NE';
+   }
+   else if (deg >= 071 && deg <= 115){
+      return 'E';
+   }
+   else if (deg >= 116 && deg <= 150){
+      return 'SE';
+   }
+   else if (deg >= 151 && deg <= 200){
+      return 'S';
+   }
+   else if (deg >= 201 && deg <= 250){
+      return 'SW';
+   }
+   else if (deg >= 251 && deg <= 290){
+      return 'W';
+   }
+   else if (deg >= 291 && deg <= 340){
+      return 'NW';
+   }
+   else if (deg >= 341 && deg <= 360){
+      return 'N';
+   }
+}
 
 // **********************************************
 // **********************************************
