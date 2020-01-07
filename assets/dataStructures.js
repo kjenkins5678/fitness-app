@@ -3,7 +3,9 @@
 // **********************************************
 var fa_act = "fitness-app-activities";
 
-var activityHistory = [];
+var activityHistory = [];        // all history, used to storing 
+var activityHistoryView = [];    // today only, optionally. This will be what the user sees
+
 /* = [
    // bicycling 
    {
@@ -11,6 +13,7 @@ var activityHistory = [];
       "datetime_added":"", 
       "activity":"",
       "duration":"", 
+      "duration_entry","",
       "met",
       "calories_per_hour":"",
       "calories_per_activity":""}];
@@ -332,7 +335,7 @@ function convertDurationToMinutes (durationStr){
 } // convertDurationToMinutes
 
 // **********************************************
-// load activity history, pass 0 for today, 1 for all 
+// load activity history, pass 'today' or 'all' 
 // **********************************************
 
 function loadActivityHistory (todayOrAll, activityDay) {
@@ -341,26 +344,30 @@ function loadActivityHistory (todayOrAll, activityDay) {
    if (activityStr == null || activityStr == "") {
       return;
    }
+
    activityHistory.length = 0;
-   activityHistoryTmp = activityHistory;   
-   activityHistoryTmp = JSON.parse(activityStr); 
+   activityHistory = JSON.parse(activityStr); 
 
-   if (todayOrAll == 0){
+   if (todayOrAll == 'today'){
 
-      for (i=0; i<activityHistoryTmp.length; i++){
+      for (i=0; i<activityHistory.length; i++){
   
          //alert ("data " + activityHistoryTmp[i].date_added + " argument " + activityDay); 
 
-         if (activityHistoryTmp[i].date_added == activityDay){
-            activityHistory.push (activityHistoryTmp[i]);  
+         if (activityHistory[i].date_added == activityDay){
+            activityHistoryView.push (activityHistoryTmp[i]);  
          }
       }
    }
    else {
-      activityHistory = activityHistoryTmp; 
+      activityHistoryView = activityHistory; 
    }
 }; // loadActivityHistory 
 
+// **********************************************
+// **********************************************
+
+/*
 var dayStr = moment().format ('MM/DD/YYYY');
 
 var myActivityObj = {
@@ -400,5 +407,5 @@ var activityStr = JSON.stringify(activityHistory);
 console.log (activityStr); 
 localStorage.setItem(fa_act, activityStr); 
 
-
+*/ 
 

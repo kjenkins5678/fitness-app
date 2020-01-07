@@ -231,6 +231,47 @@ function calculateMacros (){
 } // calculateMacros
 
 // **********************************************
+// loadActivityHistoryView
+// **********************************************
+
+function loadActivityHistoryView () {
+
+   //exerciseBoxElem.empty(); 
+
+   if (JSON.stringify(activityHistoryView) == null || JSON.stringify(activityHistoryView) == "") {
+      return; 
+   }
+
+   if (activityHistoryView.length > 0){
+
+      for (i=0; i<activityHistoryView.length; i++){
+
+         var myRow = $('<div class="row activityRow">'); 
+
+         var myCol = $('<div class="col-lg-6">'); 
+         myCol.text (activityHistoryView[i].activity); 
+         myRow.append(myCol); 
+
+         var myCol = $('<div class="col-lg-3">'); 
+         myCol.text (activityHistoryView[i].duration_entry); 
+         myRow.append(myCol); 
+
+         var myCol = $('<div class="col-lg-3">'); 
+         myCol.text (activityHistoryView[i].calories_per_activity); 
+         myRow.append(myCol); 
+
+         exerciseBoxElem.append(myRow); 
+
+      }
+   }
+
+} // loadActivityHistoryView
+
+// **********************************************
+// **********************************************
+
+
+// **********************************************
 // init 
 // **********************************************
 
@@ -240,31 +281,9 @@ function init () {
    //console.log (catList); 
    
    var dayStr = moment().format ('MM/DD/YYYY');
-   loadActivityHistory (0, dayStr); 
+   loadActivityHistory ('today', dayStr); 
    console.log (activityHistory); 
-
-   if (activityHistory.length > 0){
-
-      for (i=0; i<activityHistory.length; i++){
-
-         var myRow = $('<div class="row">'); 
-
-         var myCol = $('<div class="col-lg-4">'); 
-         myCol.text (activityHistory[i].activity); 
-         myRow.append(myCol); 
-
-         var myCol = $('<div class="col-lg-4">'); 
-         myCol.text (activityHistory[i].duration); 
-         myRow.append(myCol); 
-
-         var myCol = $('<div class="col-lg-4">'); 
-         myCol.text (activityHistory[i].calories_per_activity); 
-         myRow.append(myCol); 
-
-         exerciseBoxElem.append(myRow); 
-
-      }
-   }
+   loadActivityHistoryView (); 
 
 }; // init 
 
@@ -363,6 +382,7 @@ calculateBtnElem.on("click", function () {
    if (validInput == false){
       return;
    }
+   $(".activityRow").remove();
    calculateMacros();
 
 }); 
@@ -406,7 +426,10 @@ addActivityButtonElem.on("click", function () {
 
 addActivityModalCloseElem.on("click", function () {
 
-   editActivityInputs(); 
+   var rc = editActivityInputs(); 
+   if (rc==false){
+      return; 
+   }
 
    // convert duration input string to minutes 
    var durationMin = convertDurationToMinutes(durationInputElem.val().trim()); 
@@ -415,9 +438,7 @@ addActivityModalCloseElem.on("click", function () {
       + " duration entry = " + durationInputElem.val().trim()
       + " duration converted " + durationMin);
 
-
    // load the object 
-
    var dayStr = moment().format ('MM/DD/YYYY');
    var myActivityObj = {};
    myActivityObj.date_added = dayStr; 
@@ -425,7 +446,6 @@ addActivityModalCloseElem.on("click", function () {
    myActivityObj.activity = activityInputElem.val(); 
    myActivityObj.duration = durationMin; 
    myActivityObj.duration_entry = durationInputElem.val().trim(); 
-
    myActivityObj.met = getActivityMET (myActivityObj.activity); 
 
    var calTmp = myActivityObj.met * weightKG;
@@ -434,28 +454,16 @@ addActivityModalCloseElem.on("click", function () {
 
    console.log (myActivityObj); 
 
-   // load the page elements 
+   // add it to the viewing structure
+   activityHistoryView.unshift (myActivityObj); 
+   loadActivityHistoryView(); 
 
-   var myRow = $('<div class="row">'); 
+   // add it to local storage 
+   activityHistory.unshift (myActivityObj); 
+   var activityStr = JSON.stringify (activityHistory); 
+   localStorage.setItem (fa_act, activityStr); 
 
-   var myCol = $('<div class="col-lg-4">'); 
-   myCol.text (activityInputElem.val()); 
-   myRow.append(myCol); 
-
-   var myCol = $('<div class="col-lg-4">'); 
-   myCol.text (durationInputElem.val().trim()); 
-   myRow.append(myCol); 
-
-   var myCol = $('<div class="col-lg-4">'); 
-   myCol.text (myActivityObj.calories_per_activity); 
-   myRow.append(myCol); 
-
-   exerciseBoxElem.append(myRow); 
-
-/* 
-   activityHistory.push (myActivityObj);
-*/
-}); 
+}); // addActivityModalCloseElem.on("click"
 
 activityCategoryInputElem.on("change", function (){
 
