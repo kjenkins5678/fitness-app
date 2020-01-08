@@ -2,10 +2,32 @@
 // keys for localStorage
 // **********************************************
 var fa_act = "fitness-app-activities";
+var fa_activityList = "fa-activities-";
+var fa_attributes = "fa-attributes-";
+var openWeatherKey = "642722fdfe11197400af4a85e9c528a0"; 
 
 var activityHistory = [];        // all history, used to storing 
 var activityHistoryView = [];    // today only, optionally. This will be what the user sees
 
+// **********************************************
+// user attribute structure 
+// **********************************************
+
+var userAttributes; 
+
+/*
+userAttributes = {
+   "age":"",
+   "height":"",
+   "weight":"",
+   "gender":"",
+   "activity_level":"",
+   "goal":""
+}
+
+// **********************************************
+// activity structure 
+// **********************************************
 /* = [
    // bicycling 
    {
@@ -338,9 +360,9 @@ function convertDurationToMinutes (durationStr){
 // load activity history, pass 'today' or 'all' 
 // **********************************************
 
-function loadActivityHistory (todayOrAll, activityDay) {
+function loadActivityHistory (todayOrAll, activityDay, uName) {
 
-   var activityStr = localStorage.getItem (fa_act);
+   var activityStr = localStorage.getItem (fa_activityList + uName);
    if (activityStr == null || activityStr == "") {
       return;
    }
@@ -354,8 +376,9 @@ function loadActivityHistory (todayOrAll, activityDay) {
   
          //alert ("data " + activityHistoryTmp[i].date_added + " argument " + activityDay); 
 
+         activityHistoryView.length=0; 
          if (activityHistory[i].date_added == activityDay){
-            activityHistoryView.push (activityHistoryTmp[i]);  
+            activityHistoryView.push (activityHistory[i]);  
          }
       }
    }
@@ -363,6 +386,40 @@ function loadActivityHistory (todayOrAll, activityDay) {
       activityHistoryView = activityHistory; 
    }
 }; // loadActivityHistory 
+
+// **********************************************
+// this is related to the openWeather data
+// **********************************************
+
+function getCardinalDirection (deg){
+   if (deg >= 000 && deg <= 020){
+      return 'N';
+   }
+   else if (deg >= 021 && deg <= 070){
+      return 'NE';
+   }
+   else if (deg >= 071 && deg <= 115){
+      return 'E';
+   }
+   else if (deg >= 116 && deg <= 150){
+      return 'SE';
+   }
+   else if (deg >= 151 && deg <= 200){
+      return 'S';
+   }
+   else if (deg >= 201 && deg <= 250){
+      return 'SW';
+   }
+   else if (deg >= 251 && deg <= 290){
+      return 'W';
+   }
+   else if (deg >= 291 && deg <= 340){
+      return 'NW';
+   }
+   else if (deg >= 341 && deg <= 360){
+      return 'N';
+   }
+}
 
 // **********************************************
 // **********************************************

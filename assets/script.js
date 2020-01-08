@@ -5,6 +5,7 @@ var catList;
 
 var calculateBtnElem = $("#calculateButton"); 
 
+var nameInputElem = $("#nameInput"); 
 var ageInputElem = $("#ageInput");
 var heightInputElem = $("#heightInput");
 var weightInputElem = $("#weightInput");
@@ -38,10 +39,15 @@ var addActivityModalCloseElem = $(".activity-modal-close");
 var activityCategoryInputElem = $("#activityCategoryInput"); 
 var activityInputElem = $("#activityInput"); 
 var durationInputElem = $("#durationInput");
+var viewWeatherButtonElem = $("#viewWeatherButton"); 
+var getAttributesButtonElem = $("#getAttributesButton"); 
 
 var apiQueryStr = "for breakfast i ate 2 eggs, bacon, and french toast"
 
 var exerciseBoxElem = $("#exerciseBox"); 
+
+var lat; 
+var lon; 
 
 // **********************************************
 // functions
@@ -270,6 +276,42 @@ function loadActivityHistoryView () {
 // **********************************************
 // **********************************************
 
+function getCurrentWeather (){
+
+   var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat="
+      + lat + "&lon=" + lon + "&units=imperial&appid=" + openWeatherKey;
+
+   console.log (queryURL); 
+
+   $.ajax({
+      url: queryURL,
+      method: "GET"
+   }).then(function(response) {
+
+      console.log ("I'm in the geCurrentWeather AJAX callback\n" + response.weather[0].description
+         + '\n curr Temp ' + Math.round (response.main.temp) 
+         + '\n min Temp ' + Math.round (response.main.temp_min) 
+         + '\n max Temp ' + Math.round (response.main.temp_max) 
+         + '\n deg ' + response.wind.deg 
+         + '\n out of ' + getCardinalDirection(response.wind.deg)
+         + '\n at ' + Math.round (response.wind.speed) + ' mph'); 
+
+   }); 
+};    
+
+// **********************************************
+// gotta have it. called by getLocation in location.js. (Theres got to be a better way to do this)
+// **********************************************
+
+function locationFound () {
+
+   lat = getLatitude ();
+   lon = getLongitude (); 
+
+   //alert ("lat " + lat + " lon " + lon); 
+   getCurrentWeather();
+
+}      
 
 // **********************************************
 // init 
@@ -277,13 +319,10 @@ function loadActivityHistoryView () {
 
 function init () {
 
+   getLocation(); 
+
    catList = getActivityCategories();
    //console.log (catList); 
-   
-   var dayStr = moment().format ('MM/DD/YYYY');
-   loadActivityHistory ('today', dayStr); 
-   console.log (activityHistory); 
-   loadActivityHistoryView (); 
 
 }; // init 
 
@@ -375,6 +414,48 @@ function UpdateActualsExercise () {
 // calculate button  
 // **********************************************
 
+getAttributesButtonElem.on("click", function () {
+
+   if (nameInputElem.val().trim() == null || nameInputElem.val().trim() == ""){
+      return;
+   }
+   var lsKey = fa_attributes + nameInputElem.val().trim().toLowerCase(); 
+   alert ("get stats for " + lsKey); 
+
+   ageInputElem.val("");
+   heightInputElem.val("");
+   weightInputElem.val("");
+   genderInputElem.val("Female");
+   activityLevelInputElem.val("Sedentary");
+   goalInputElem.val("Lose Weight");
+   $(".activityRow").remove();
+
+   var str = localStorage.getItem (lsKey);
+   if (str == null || str == ""){
+      return;
+   }
+   userAttributes = JSON.parse(str);
+   console.log ("getAttributesButtonElem click\n" + userAttributes); 
+
+   ageInputElem.val(userAttributes.age);
+   heightInputElem.val(userAttributes.height);
+   weightInputElem.val(userAttributes.weight);
+   genderInputElem.val(userAttributes.gender);
+   activityLevelInputElem.val(userAttributes.activity_level);
+   goalInputElem.val(userAttributes.goal);
+
+   // does this user have any activity history?
+   var dayStr = moment().format ('MM/DD/YYYY');
+   loadActivityHistory ('today', dayStr, nameInputElem.val().trim().toLowerCase()); 
+   console.log (activityHistory); 
+   loadActivityHistoryView (); 
+
+});
+
+// **********************************************
+// calculate button  
+// **********************************************
+
 calculateBtnElem.on("click", function () {
 
    //alert ("here"); 
@@ -382,7 +463,22 @@ calculateBtnElem.on("click", function () {
    if (validInput == false){
       return;
    }
-   $(".activityRow").remove();
+
+   // wwrite user data 
+   userAttributes = {
+      age:ageInputElem.val().trim(),  
+      height:heightInputElem.val().trim(),
+      weight:weightInputElem.val().trim(),
+      gender:genderInputElem.val(),
+      activity_level:activityLevelInputElem.val(),
+      goal:goalInputElem.val()
+   }; 
+
+   var lsKey = fa_attributes + nameInputElem.val().trim().toLowerCase();
+
+   var str = JSON.stringify(userAttributes); 
+   localStorage.setItem(lsKey, str); 
+
    calculateMacros();
 
 }); 
@@ -419,6 +515,17 @@ addActivityButtonElem.on("click", function () {
    }
 
 }); 
+
+// **********************************************
+// open weather modal  
+// **********************************************
+
+viewWeatherButtonElem.on("click", function () {
+
+   //alert ("view weather"); 
+   $("#myWeatherModal").modal('show');
+
+});
 
 // **********************************************
 // experiment with closing a modal 
@@ -461,7 +568,7 @@ addActivityModalCloseElem.on("click", function () {
    // add it to local storage 
    activityHistory.unshift (myActivityObj); 
    var activityStr = JSON.stringify (activityHistory); 
-   localStorage.setItem (fa_act, activityStr); 
+   localStorage.setItem (fa_activityList + nameInputElem.val().trim().toLowerCase(), activityStr); 
 
 }); // addActivityModalCloseElem.on("click"
 

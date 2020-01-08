@@ -1,23 +1,26 @@
 #inputText{
-   padding-bottom:8px; 
+   padding-bottom:6px; 
 }
 .ipTextCol{
    width:100%;
 }
 .jumbotron{
-   padding-top: 2rem; 
-   padding-bottom: 2rem; 
+   padding-top: 1rem; 
+   padding-bottom: 1rem; 
+}
+.jRow1{
+   margin-bottom: 8px;
 }
 #exerciseBox, #foodBox{
    border: 1px solid black;
    border-radius: 25px;
-   height:200px;
+   height:180px;
    background-color:#bbeff7;
 }
 img{
-   height:50px;
-   width:50px; 
-   margin-left:32%;
+   height:40px;
+   width:40px; 
+   margin-left:34%;
 }
 h5{
    text-align:center;
