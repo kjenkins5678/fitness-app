@@ -2,11 +2,32 @@
 // keys for localStorage
 // **********************************************
 var fa_act = "fitness-app-activities";
+var fa_activityList = "fa-activities-";
+var fa_attributes = "fa-attributes-";
 var openWeatherKey = "642722fdfe11197400af4a85e9c528a0"; 
 
 var activityHistory = [];        // all history, used to storing 
 var activityHistoryView = [];    // today only, optionally. This will be what the user sees
 
+// **********************************************
+// user attribute structure 
+// **********************************************
+
+var userAttributes; 
+
+/*
+userAttributes = {
+   "age":"",
+   "height":"",
+   "weight":"",
+   "gender":"",
+   "activity_level":"",
+   "goal":""
+}
+
+// **********************************************
+// activity structure 
+// **********************************************
 /* = [
    // bicycling 
    {
@@ -339,9 +360,9 @@ function convertDurationToMinutes (durationStr){
 // load activity history, pass 'today' or 'all' 
 // **********************************************
 
-function loadActivityHistory (todayOrAll, activityDay) {
+function loadActivityHistory (todayOrAll, activityDay, uName) {
 
-   var activityStr = localStorage.getItem (fa_act);
+   var activityStr = localStorage.getItem (fa_activityList + uName);
    if (activityStr == null || activityStr == "") {
       return;
    }
@@ -355,8 +376,9 @@ function loadActivityHistory (todayOrAll, activityDay) {
   
          //alert ("data " + activityHistoryTmp[i].date_added + " argument " + activityDay); 
 
+         activityHistoryView.length=0; 
          if (activityHistory[i].date_added == activityDay){
-            activityHistoryView.push (activityHistoryTmp[i]);  
+            activityHistoryView.push (activityHistory[i]);  
          }
       }
    }

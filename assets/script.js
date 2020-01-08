@@ -5,6 +5,7 @@ var catList;
 
 var calculateBtnElem = $("#calculateButton"); 
 
+var nameInputElem = $("#nameInput"); 
 var ageInputElem = $("#ageInput");
 var heightInputElem = $("#heightInput");
 var weightInputElem = $("#weightInput");
@@ -39,6 +40,7 @@ var activityCategoryInputElem = $("#activityCategoryInput");
 var activityInputElem = $("#activityInput"); 
 var durationInputElem = $("#durationInput");
 var viewWeatherButtonElem = $("#viewWeatherButton"); 
+var getAttributesButtonElem = $("#getAttributesButton"); 
 
 var apiQueryStr = "for breakfast i ate 2 eggs, bacon, and french toast"
 
@@ -321,11 +323,6 @@ function init () {
 
    catList = getActivityCategories();
    //console.log (catList); 
-   
-   var dayStr = moment().format ('MM/DD/YYYY');
-   loadActivityHistory ('today', dayStr); 
-   console.log (activityHistory); 
-   loadActivityHistoryView (); 
 
 }; // init 
 
@@ -417,6 +414,48 @@ function UpdateActualsExercise () {
 // calculate button  
 // **********************************************
 
+getAttributesButtonElem.on("click", function () {
+
+   if (nameInputElem.val().trim() == null || nameInputElem.val().trim() == ""){
+      return;
+   }
+   var lsKey = fa_attributes + nameInputElem.val().trim().toLowerCase(); 
+   alert ("get stats for " + lsKey); 
+
+   ageInputElem.val("");
+   heightInputElem.val("");
+   weightInputElem.val("");
+   genderInputElem.val("Female");
+   activityLevelInputElem.val("Sedentary");
+   goalInputElem.val("Lose Weight");
+   $(".activityRow").remove();
+
+   var str = localStorage.getItem (lsKey);
+   if (str == null || str == ""){
+      return;
+   }
+   userAttributes = JSON.parse(str);
+   console.log ("getAttributesButtonElem click\n" + userAttributes); 
+
+   ageInputElem.val(userAttributes.age);
+   heightInputElem.val(userAttributes.height);
+   weightInputElem.val(userAttributes.weight);
+   genderInputElem.val(userAttributes.gender);
+   activityLevelInputElem.val(userAttributes.activity_level);
+   goalInputElem.val(userAttributes.goal);
+
+   // does this user have any activity history?
+   var dayStr = moment().format ('MM/DD/YYYY');
+   loadActivityHistory ('today', dayStr, nameInputElem.val().trim().toLowerCase()); 
+   console.log (activityHistory); 
+   loadActivityHistoryView (); 
+
+});
+
+// **********************************************
+// calculate button  
+// **********************************************
+
 calculateBtnElem.on("click", function () {
 
    //alert ("here"); 
@@ -424,7 +463,22 @@ calculateBtnElem.on("click", function () {
    if (validInput == false){
       return;
    }
-   $(".activityRow").remove();
+
+   // wwrite user data 
+   userAttributes = {
+      age:ageInputElem.val().trim(),  
+      height:heightInputElem.val().trim(),
+      weight:weightInputElem.val().trim(),
+      gender:genderInputElem.val(),
+      activity_level:activityLevelInputElem.val(),
+      goal:goalInputElem.val()
+   }; 
+
+   var lsKey = fa_attributes + nameInputElem.val().trim().toLowerCase();
+
+   var str = JSON.stringify(userAttributes); 
+   localStorage.setItem(lsKey, str); 
+
    calculateMacros();
 
 }); 
@@ -514,7 +568,7 @@ addActivityModalCloseElem.on("click", function () {
    // add it to local storage 
    activityHistory.unshift (myActivityObj); 
    var activityStr = JSON.stringify (activityHistory); 
-   localStorage.setItem (fa_act, activityStr); 
+   localStorage.setItem (fa_activityList + nameInputElem.val().trim().toLowerCase(), activityStr); 
 
 }); // addActivityModalCloseElem.on("click"
 

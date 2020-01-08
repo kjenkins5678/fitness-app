@@ -113,15 +113,22 @@
    *******************************************-->
 
    <div class="container">
-   <!--<div class="container-fixed">-->
 
       <!--jumbotron-->
       <div class="jumbotron">
-         <h3 class="text-left">
-            Enter Your Macro Attributes
-         </h3>
-
-         <hr>
+         <div class="row jRow1">
+            <div class="col col-lg-4">
+               <h3 class="text-left">Macro Attributes</h3>
+            </div>
+            <div class="col col-lg-4" id="col-nameInput">
+               <input class="ipTextCol" type="text" id="nameInput" placeholder="who are you?">
+            </div>
+            <div class="col col-lg-4" id="col-nameInput">
+               <button class="btn btn-info btn-sm" type="button" id ="getAttributesButton">
+                  Get Your Stats
+               </button>
+            </div>
+         </div>
 
          <div class="row" id="inputText">
             <div class="col col-lg-offset-2">
@@ -163,7 +170,7 @@
          </div>
          </div> <!--jumbotron row for dropdowns-->
 
-         <button class="btn btn-info" type="button" id ="calculateButton">
+         <button class="btn btn-info btn-sm" type="button" id ="calculateButton">
             Calculate
          </button>
 
@@ -183,10 +190,10 @@
             <div id="exerciseBox">
 
                <i id="exerciseLabel" class="fas fa-running">Exercise</i>
-               <button class="btn btn-info" type="button" id ="addActivityButton">
+               <button class="btn btn-info btn-sm" type="button" id ="addActivityButton">
                   Add
                </button>
-               <button class="btn btn-info" type="button" id ="viewWeatherButton">
+               <button class="btn btn-info btn-sm" type="button" id ="viewWeatherButton">
                   Forecast
                </button>
                <div class="row">
@@ -249,7 +256,7 @@
       <div class="row" id="foodAndActualsRow">
          <div class="col-lg-5">
                <i id="nutritionabel" class="form-control">Nutrition</i>
-               <button class="btn btn-info" type="button" id ="addActivityButton">
+               <button class="btn btn-info btn-sm" type="button" id ="addActivityButton">
                   Add Food
                </button>
             <div id="foodBox"></div>
