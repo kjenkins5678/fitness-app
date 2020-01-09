@@ -49,6 +49,24 @@ var exerciseBoxElem = $("#exerciseBox");
 var lat; 
 var lon; 
 
+var forecast = {
+   description:"",
+   temp:"", 
+   temp_min:"", 
+   temp_max:"", 
+   deg:"", 
+   direction:"",
+   speed:"", 
+   cloud_cover_pct:""
+}; 
+var weaxCurrTempElem = $("#weaxCurrTemp"); 
+var weaxMinTempElem = $("#weaxMinTemp"); 
+var weaxMaxTempElem = $("#weaxMaxTemp"); 
+var weaxDescriptionElem = $("#weaxDescription"); 
+var weaxWindSpeedElem = $("#weaxWindSpeed");
+var weaxWindDirectionElem = $("#weaxWindDirection");
+var weaxCloudCoverPctElem = $("#weaxCloudCoverPct");
+
 // **********************************************
 // functions
 // **********************************************
@@ -288,13 +306,35 @@ function getCurrentWeather (){
       method: "GET"
    }).then(function(response) {
 
-      console.log ("I'm in the geCurrentWeather AJAX callback\n" + response.weather[0].description
-         + '\n curr Temp ' + Math.round (response.main.temp) 
-         + '\n min Temp ' + Math.round (response.main.temp_min) 
-         + '\n max Temp ' + Math.round (response.main.temp_max) 
-         + '\n deg ' + response.wind.deg 
-         + '\n out of ' + getCardinalDirection(response.wind.deg)
-         + '\n at ' + Math.round (response.wind.speed) + ' mph'); 
+      // console.log ("I'm in the geCurrentWeather AJAX callback\n" + response.weather[0].description
+      //    + '\n curr Temp ' + Math.round (response.main.temp) 
+      //    + '\n min Temp ' + Math.round (response.main.temp_min) 
+      //    + '\n max Temp ' + Math.round (response.main.temp_max) 
+      //    + '\n deg ' + response.wind.deg 
+      //    + '\n out of ' + getCardinalDirection(response.wind.deg)
+      //    + '\n at ' + Math.round (response.wind.speed) + ' mph'); 
+
+      console.log('cloud ' + response.clouds.all); 
+
+      forecast.description = response.weather[0].description; 
+      forecast.temp = Math.round (response.main.temp);  
+      forecast.temp_min = Math.round (response.main.temp_min); 
+      forecast.temp_max = Math.round (response.main.temp_max); 
+      forecast.deg = response.wind.deg;  
+      forecast.direction = getCardinalDirection(response.wind.deg); 
+      forecast.speed = Math.round (response.wind.speed);  
+      forecast.cloud_cover_pct = response.clouds.all; 
+
+      console.log (forecast); 
+
+      weaxDescriptionElem.text(forecast.description); 
+      weaxCurrTempElem.text(forecast.temp + '\xB0'); 
+      weaxMinTempElem.text(forecast.temp_min + '\xB0'); 
+      weaxMaxTempElem.text(forecast.temp_max + '\xB0'); 
+
+      weaxWindSpeedElem.text(forecast.speed + 'mph');
+      weaxWindDirectionElem.text(forecast.direction);
+      weaxCloudCoverPctElem.text(forecast.cloud_cover_pct + '%');
 
    }); 
 };    
@@ -523,6 +563,8 @@ addActivityButtonElem.on("click", function () {
 viewWeatherButtonElem.on("click", function () {
 
    //alert ("view weather"); 
+
+
    $("#myWeatherModal").modal('show');
 
 });

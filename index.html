@@ -93,16 +93,59 @@
    <div id="myWeatherModal" class="modal fade" tabindex="-1">
       <div class="modal-dialog">
          <div class="modal-content">
+
             <div class="modal-header">
-               <h5 class="modal-title">Today's Weather</h5>
+               <h3 class="modal-title"></h3>
                <button type="button" class="close error-modal_close" data-dismiss="modal">&times;</button>
             </div>
+
             <div class="modal-body">
-               <p id="myWeatherModalText">placeholder text</p>
+
+               <h4>Today's Weather</h4> 
+               <div class="row">
+                  <div class="col">
+                     <h4 id ="weaxDescription"></h4>
+                  </div>
+                  <div class="col">
+                     <p>ADD ICON HERE</p>
+                  </div>
+               </div>
+               <hr>
+
+               <h4>Temperatures</h4>
+               <div class="row">
+                  <div class="col">
+                     <h6>Min</h6><p id="weaxCurrTemp"></p>
+                  </div>
+                  <div class="col">
+                     <h6>Min</h6><p id="weaxMinTemp"></p>
+                  </div>
+                  <div class="col">
+                     <h6>Max</h6><p id="weaxMaxTemp"></p>
+                  </div>
+               </div>
+               <hr>
+
+               <h4>Wind</h4>
+               <div class="row">
+                  <div class="col">
+                     <h6>Speed</h6><p id="weaxWindSpeed"></p>
+                  </div>
+                  <div class="col">
+                     <h6>From The</h6><p id="weaxWindDirection"></p>
+                  </div>
+                  <div class="col">
+                     <h6>Cloud Cover</h6><p id="weaxCloudCoverPct"></p>
+                  </div>
+               </div>
+
+               <!--<p id="myWeatherModalText">placeholder text</p>-->
             </div>
+
             <div class="modal-footer">
                <button type="button" class="btn btn-info error-modal_close" data-dismiss="modal">Ok</button>
             </div>
+
          </div>
       </div>
    </div> <!--myWeatherModal-->
