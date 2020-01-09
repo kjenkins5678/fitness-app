@@ -11,6 +11,9 @@
 .jRow1{
    margin-bottom: 8px;
 }
+.modal-header{
+   background-color:#bbeff7;
+}
 #exerciseBox, #foodBox{
    border: 1px solid black;
    border-radius: 25px;

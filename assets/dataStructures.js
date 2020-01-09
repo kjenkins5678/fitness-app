@@ -393,31 +393,31 @@ function loadActivityHistory (todayOrAll, activityDay, uName) {
 
 function getCardinalDirection (deg){
    if (deg >= 000 && deg <= 020){
-      return 'N';
+      return 'North';
    }
    else if (deg >= 021 && deg <= 070){
-      return 'NE';
+      return 'NorthEast';
    }
    else if (deg >= 071 && deg <= 115){
-      return 'E';
+      return 'East';
    }
    else if (deg >= 116 && deg <= 150){
-      return 'SE';
+      return 'SouthEast';
    }
    else if (deg >= 151 && deg <= 200){
-      return 'S';
+      return 'South';
    }
    else if (deg >= 201 && deg <= 250){
-      return 'SW';
+      return 'SouthWest';
    }
    else if (deg >= 251 && deg <= 290){
-      return 'W';
+      return 'West';
    }
    else if (deg >= 291 && deg <= 340){
-      return 'NW';
+      return 'NorthWest';
    }
    else if (deg >= 341 && deg <= 360){
-      return 'N';
+      return 'North';
    }
 }
 
