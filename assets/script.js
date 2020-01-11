@@ -174,7 +174,7 @@ function editInputs (){
 function calculateCalsPerDay() {
 
    heightCM = heightInputElem.val() * 2.54; 
-   weightKG = weightInputElem.val () * 0.453592; 
+   weightKG = weightInputElem.val () * 2.205; 
 
    calsPerDay = Math.round ((10 * weightKG) + (6.25 * heightCM) - (5 * ageInputElem.val())); 
    if (genderInputElem.val () == 'Male'){
@@ -198,35 +198,35 @@ function calculateMacros (){
 
    switch(activityLevelInputElem.val()){
    case 'Sedentary':
-      tdee = calsPerDay * 1.2; 
+      tdee = calsPerDay * 1.01; 
       break; 
    case 'Moderate':
-      tdee = calsPerDay * 1.55 
+      tdee = calsPerDay * 1.05;  
       break; 
    case 'Vigorous':
-      tdee = calsPerDay * 1.725; 
+      tdee = calsPerDay * 1.1; 
       break; 
    default: 
-      tdee = calsPerDay * 1.2; 
+      tdee = calsPerDay * 1.01; 
       break; 
    };
    tdee = Math.round(tdee); 
 
    switch(goalInputElem.val()){
    case "Lose Weight":
-      fatPerDay = tdee * .3;
-      carbsPerDay = tdee * .35;
-      proteinPerDay = carbsPerDay;
+      fatPerDay = tdee * .13;
+      carbsPerDay = tdee * .12;
+      proteinPerDay = tdee * .14;
       break;
    case "Gain":
-      fatPerDay = tdee * .2;
-      carbsPerDay = tdee * .5;
-      proteinPerDay = tdee * .3;
+      fatPerDay = tdee * .3;
+      carbsPerDay = tdee * .23;
+      proteinPerDay = tdee * .18;
       break;
    case "Recomp":
-      fatPerDay = tdee * .33;
-      carbsPerDay = tdee * .33;
-      proteinPerDay = tdee * .34;
+      fatPerDay = tdee * .15;
+      carbsPerDay = tdee * .14;
+      proteinPerDay = tdee * .14;
       break;
    }
    fatPerDay = Math.round (fatPerDay / 4); 
