@@ -369,14 +369,13 @@ function loadActivityHistory (todayOrAll, activityDay, uName) {
 
    activityHistory.length = 0;
    activityHistory = JSON.parse(activityStr); 
-
+   activityHistoryView.length=0; 
    if (todayOrAll == 'today'){
 
       for (i=0; i<activityHistory.length; i++){
   
-         //alert ("data " + activityHistoryTmp[i].date_added + " argument " + activityDay); 
+         //alert ("data " + activityHistory[i].date_added + " argument " + activityDay); 
 
-         activityHistoryView.length=0; 
          if (activityHistory[i].date_added == activityDay){
             activityHistoryView.push (activityHistory[i]);  
          }
