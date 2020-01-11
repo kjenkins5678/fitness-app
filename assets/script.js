@@ -66,6 +66,7 @@ var weaxDescriptionElem = $("#weaxDescription");
 var weaxWindSpeedElem = $("#weaxWindSpeed");
 var weaxWindDirectionElem = $("#weaxWindDirection");
 var weaxCloudCoverPctElem = $("#weaxCloudCoverPct");
+var weaxIconElem = $("#weaxIcon"); 
 
 // **********************************************
 // functions
@@ -82,7 +83,6 @@ function editActivityInputs (){
    found = false; 
    for (i=0;i<activityList.length; i++){
 
-      //alert ('ip ' + activityInputElem.val() + " list " + activityList[i].activity);   
       if (activityList[i].activity == activityInputElem.val()){
          found = true; 
          break; 
@@ -96,7 +96,6 @@ function editActivityInputs (){
 
    var durationStr = durationInputElem.val().trim (); 
 
-   //alert (durationInputElem.val()); 
    if (durationStr =="" || durationStr == null){
       errorText.text("You must enter a duration. Please retry"); 
       $("#myModal").modal('show');
@@ -234,20 +233,6 @@ function calculateMacros (){
    carbsPerDay = Math.round (carbsPerDay / 4); 
    proteinPerDay = Math.round (proteinPerDay / 4);
 
-   /*alert ("age " + ageInputElem.val() 
-      + " height " + heightInputElem.val()
-      + " weight " + weightInputElem.val()
-      + " gender " + genderInputElem.val()
-      + " act level " + activityLevelInputElem.val()
-      + " goal " + goalInputElem.val()
-      + " cpd " + calsPerDay
-      + " tdee " + tdee
-      + " fpd " + fatPerDay
-      + " ppd " + proteinPerDay
-      + " cpd " + carbsPerDay
-      ); 
-   */
-  
    targetCarbsGPDElem.text(carbsPerDay);  
    targetProteinGPDElem.text(proteinPerDay);  
    targetFatGPDElem.text(fatPerDay); 
@@ -266,6 +251,7 @@ function loadActivityHistoryView () {
       return; 
    }
 
+   $(".activityRow").remove();
    if (activityHistoryView.length > 0){
 
       for (i=0; i<activityHistoryView.length; i++){
@@ -288,7 +274,6 @@ function loadActivityHistoryView () {
 
       }
    }
-
 } // loadActivityHistoryView
 
 // **********************************************
@@ -299,22 +284,10 @@ function getCurrentWeather (){
    var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat="
       + lat + "&lon=" + lon + "&units=imperial&appid=" + openWeatherKey;
 
-   console.log (queryURL); 
-
    $.ajax({
       url: queryURL,
       method: "GET"
    }).then(function(response) {
-
-      // console.log ("I'm in the geCurrentWeather AJAX callback\n" + response.weather[0].description
-      //    + '\n curr Temp ' + Math.round (response.main.temp) 
-      //    + '\n min Temp ' + Math.round (response.main.temp_min) 
-      //    + '\n max Temp ' + Math.round (response.main.temp_max) 
-      //    + '\n deg ' + response.wind.deg 
-      //    + '\n out of ' + getCardinalDirection(response.wind.deg)
-      //    + '\n at ' + Math.round (response.wind.speed) + ' mph'); 
-
-      console.log('cloud ' + response.clouds.all); 
 
       forecast.description = response.weather[0].description; 
       forecast.temp = Math.round (response.main.temp);  
@@ -325,7 +298,7 @@ function getCurrentWeather (){
       forecast.speed = Math.round (response.wind.speed);  
       forecast.cloud_cover_pct = response.clouds.all; 
 
-      console.log (forecast); 
+      //console.log (forecast); 
 
       weaxDescriptionElem.text(forecast.description); 
       weaxCurrTempElem.text(forecast.temp + '\xB0'); 
@@ -336,8 +309,12 @@ function getCurrentWeather (){
       weaxWindDirectionElem.text(forecast.direction);
       weaxCloudCoverPctElem.text(forecast.cloud_cover_pct + '%');
 
+      weaxIconElem.attr("src",  "https://openweathermap.org/img/wn/"
+            + response.weather[0].icon 
+            + "@2x.png");
+
    }); 
-};    
+}; // getCurrentWeather
 
 // **********************************************
 // gotta have it. called by getLocation in location.js. (Theres got to be a better way to do this)
@@ -347,8 +324,6 @@ function locationFound () {
 
    lat = getLatitude ();
    lon = getLongitude (); 
-
-   //alert ("lat " + lat + " lon " + lon); 
    getCurrentWeather();
 
 }      
@@ -360,9 +335,7 @@ function locationFound () {
 function init () {
 
    getLocation(); 
-
    catList = getActivityCategories();
-   //console.log (catList); 
 
 }; // init 
 
@@ -444,14 +417,14 @@ function UpdateActualsExercise () {
       };
    };
    
-};
+}; // UpdateActualsExercise
 
 // **********************************************
 // listeners
 // **********************************************
 
 // **********************************************
-// calculate button  
+// get stats button  
 // **********************************************
 
 getAttributesButtonElem.on("click", function () {
@@ -460,7 +433,6 @@ getAttributesButtonElem.on("click", function () {
       return;
    }
    var lsKey = fa_attributes + nameInputElem.val().trim().toLowerCase(); 
-   alert ("get stats for " + lsKey); 
 
    ageInputElem.val("");
    heightInputElem.val("");
@@ -475,7 +447,6 @@ getAttributesButtonElem.on("click", function () {
       return;
    }
    userAttributes = JSON.parse(str);
-   console.log ("getAttributesButtonElem click\n" + userAttributes); 
 
    ageInputElem.val(userAttributes.age);
    heightInputElem.val(userAttributes.height);
@@ -490,7 +461,7 @@ getAttributesButtonElem.on("click", function () {
    console.log (activityHistory); 
    loadActivityHistoryView (); 
 
-});
+}); // getAttributesButtonElem.on("click"
 
 // **********************************************
 // calculate button  
@@ -498,7 +469,6 @@ getAttributesButtonElem.on("click", function () {
 
 calculateBtnElem.on("click", function () {
 
-   //alert ("here"); 
    var validInput = editInputs(); 
    if (validInput == false){
       return;
@@ -521,7 +491,7 @@ calculateBtnElem.on("click", function () {
 
    calculateMacros();
 
-}); 
+}); // calculateBtnElem.on("click"
 
 // **********************************************
 // experiment with closing a modal 
@@ -543,17 +513,14 @@ addActivityButtonElem.on("click", function () {
    durationInputElem.empty();
    activityInputElem.empty(); 
 
-   //alert ("add activity"); 
    $("#myActivityModal").modal('show');
 
    for (i=0;i<catList.length;i++){
       var newOption = $("<option>")
       newOption.text(catList[i]); 
-      //console.log(newOption); 
       activityCategoryInputElem.append(newOption); 
 
    }
-
 }); 
 
 // **********************************************
@@ -562,15 +529,12 @@ addActivityButtonElem.on("click", function () {
 
 viewWeatherButtonElem.on("click", function () {
 
-   //alert ("view weather"); 
-
-
    $("#myWeatherModal").modal('show');
 
 });
 
 // **********************************************
-// experiment with closing a modal 
+// close the activity modal. edit them, add the new one if edits pass   
 // **********************************************
 
 addActivityModalCloseElem.on("click", function () {
@@ -582,10 +546,6 @@ addActivityModalCloseElem.on("click", function () {
 
    // convert duration input string to minutes 
    var durationMin = convertDurationToMinutes(durationInputElem.val().trim()); 
-
-   console.log ("user hit OK on activity modal: activity = " + activityInputElem.val()
-      + " duration entry = " + durationInputElem.val().trim()
-      + " duration converted " + durationMin);
 
    // load the object 
    var dayStr = moment().format ('MM/DD/YYYY');
@@ -601,11 +561,13 @@ addActivityModalCloseElem.on("click", function () {
    myActivityObj.calories_per_hour = Math.round (calTmp);  
    myActivityObj.calories_per_activity = Math.round (calTmp * (durationMin / 60));  
 
-   console.log (myActivityObj); 
-
    // add it to the viewing structure
    activityHistoryView.unshift (myActivityObj); 
    loadActivityHistoryView(); 
+
+   for (i=0;i<activityHistoryView.length;i++){
+      //console.log ('ahv\n' + activityHistoryView[i].activity); 
+   }
 
    // add it to local storage 
    activityHistory.unshift (myActivityObj); 
@@ -614,18 +576,19 @@ addActivityModalCloseElem.on("click", function () {
 
 }); // addActivityModalCloseElem.on("click"
 
+// **********************************************
+// **********************************************
+
 activityCategoryInputElem.on("change", function (){
 
    activityInputElem.empty(); 
 
-   //alert ("ok, category selected " + activityCategoryInputElem.val()); 
    var catActivityList = getActivities(activityCategoryInputElem.val()); 
    console.log (catActivityList); 
 
    for (i=0;i<catActivityList.length;i++){
       var newOption = $("<option>")
       newOption.text(catActivityList[i]); 
-      //console.log(newOption); 
       activityInputElem.append(newOption); 
 
    }
@@ -637,7 +600,6 @@ activityCategoryInputElem.on("change", function (){
 
 $(document).ready(function() {
    init ();
-   //alert (convertMinutesToDuration(255)); 
    CallNutritionix();
    UpdateActualsExercise();
 });
