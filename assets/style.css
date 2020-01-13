@@ -8,12 +8,32 @@
    padding-top: 2rem; 
    padding-bottom: 2rem; 
 }
-#exerciseBox, #foodBox{
+/* #exerciseBox, #foodBox{
    border: 1px solid black;
    border-radius: 25px;
-   height:200px;
+   height:300px;
+
    background-color:#bbeff7;
-}
+} */
+
+#exerciseBox, #foodBox{
+    background: none repeat scroll 0 0 #F9F9F9;
+    border-top: 1px solid #CDCDCD;
+    border-left: 1px solid #CDCDCD;
+	border-right: 1px solid #CDCDCD;
+	border-bottom: 1px solid #CDCDCD;
+    clear: both;
+    margin-top: 16px;
+    margin-bottom: 16px;
+	position: relative;
+	text-align: justify;
+ }
+
+
+
+
+
+
 img{
    height:50px;
    width:50px; 
@@ -529,7 +549,9 @@ a:hover {
 		margin-left: 0;
 		width: auto;
 	}
-}
+	
+
+	
 @media (max-width: 979px) {
 	div.dataTables_wrapper .ui-widget-header {
 		height: 68px;
