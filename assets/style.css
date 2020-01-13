@@ -8,6 +8,12 @@
    padding-top: 2rem; 
    padding-bottom: 2rem; 
 }
+.jRow1{
+   margin-bottom: 8px;
+}
+.modal-header{
+   background-color:#bbeff7;
+}
 #exerciseBox, #foodBox{
    border: 1px solid black;
    border-radius: 25px;
@@ -29,7 +35,6 @@ h5{
    margin-top:5px;  
    width:100px; 
 }
-
 /* new css stuff */
 body {
 	background:#49CCED;
@@ -521,4 +526,8 @@ a:hover {
 	.dataTables_filter, .dataTables_paginate {
 		text-align: center;
 	}
+}
+#weaxIcon{
+   height:150px;
+   width:150px; 
 }

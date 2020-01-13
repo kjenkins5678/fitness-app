@@ -603,3 +603,4 @@ $(document).ready(function() {
    CallNutritionix();
    UpdateActualsExercise();
 });
+
