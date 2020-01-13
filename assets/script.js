@@ -42,7 +42,7 @@ var durationInputElem = $("#durationInput");
 var viewWeatherButtonElem = $("#viewWeatherButton"); 
 var getAttributesButtonElem = $("#getAttributesButton"); 
 
-var apiQueryStr = "for breakfast i ate 2 eggs, bacon, and french toast"
+var apiQueryStr = null;
 
 var exerciseBoxElem = $("#exerciseBox"); 
 
@@ -372,7 +372,7 @@ function CallNutritionix () {
 
       for (i = 0; i<response.foods.length; i++){
 
-         // console.log(response.foods[i].food_name);
+         console.log(response.foods[i].food_name);
 
          //Get the calories, add to actualCalories
          actualCalories += response.foods[i].nf_calories;
@@ -600,15 +600,15 @@ activityCategoryInputElem.on("change", function (){
 
 $(document).ready(function() {
    init ();
-   // CallNutritionix();
+   
    UpdateActualsExercise();
+   console.log(apiQueryStr);
 
    $("#addNutritionButton").on("click", function() {
 
       event.preventDefault();
-    
-      text_test = $("#textBox").val();
-      console.log(text_test);
+      apiQueryStr = $("#textBox").val();
+      CallNutritionix();
 
    })
 
