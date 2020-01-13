@@ -600,7 +600,7 @@ activityCategoryInputElem.on("change", function (){
 
 $(document).ready(function() {
    init ();
-   CallNutritionix();
+   // CallNutritionix();
    UpdateActualsExercise();
 });
 
