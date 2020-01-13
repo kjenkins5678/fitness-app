@@ -30,6 +30,24 @@ h5{
    width:100px; 
 }
 
+/*modal things */
+.modal {
+	text-align: center;
+	padding: 0!important;
+  }
+  .modal:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -4px;
+  }
+  .modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+  }
+
 /* new css stuff */
 body {
 	background:#49CCED;
@@ -267,7 +285,8 @@ a:hover {
 	margin-bottom: 0;
 }
 
-.widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header {
+/* .widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header { */
+.widget-title, .table th, div.dataTables_wrapper .ui-widget-header {
 	background-color: #efefef;
 	
     border-bottom: 1px solid #CDCDCD;
@@ -382,7 +401,7 @@ a:hover {
     display: block;
     height: 8px;
 }
-.modal {
+/* .modal {
 	z-index: 99999 !important;
 }
 .modal-backdrop {
@@ -396,7 +415,7 @@ a:hover {
 	font-size: 12px;
 	text-shadow: 0 1px 0 #ffffff;
 }
-
+ */
 
 .row-fluid .span20{ width:97.8%}
 .form-horizontal .form-actions {
