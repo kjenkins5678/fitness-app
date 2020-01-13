@@ -602,5 +602,15 @@ $(document).ready(function() {
    init ();
    // CallNutritionix();
    UpdateActualsExercise();
+
+   $("#addNutritionButton").on("click", function() {
+
+      event.preventDefault();
+    
+      text_test = $("#textBox").val();
+      console.log(text_test);
+
+   })
+
 });
 
