@@ -378,6 +378,10 @@ function UpdateActualsNutrition () {
 };
 
 // **********************************************
+// Adding functionality to nutrition box
+// **********************************************
+
+// **********************************************
 // Call Nutritionix
 // **********************************************
 
@@ -640,5 +644,6 @@ $(document).ready(function() {
    //alert (convertMinutesToDuration(255)); 
    CallNutritionix();
    UpdateActualsExercise();
+   UpdateActualsNutrition(); 
 });
 
