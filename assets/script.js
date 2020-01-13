@@ -256,7 +256,7 @@ function loadActivityHistoryView () {
 
       for (i=0; i<activityHistoryView.length; i++){
 
-         var myRow = $('<div class="row activityRow">'); 
+         var myRow = $('<div class="row-fluid activityRow">'); 
 
          var myCol = $('<div class="col-lg-6">'); 
          myCol.text (activityHistoryView[i].activity); 
