@@ -5,6 +5,7 @@ var catList;
 
 var calculateBtnElem = $("#calculateButton"); 
 
+var nameInputElem = $("#nameInput"); 
 var ageInputElem = $("#ageInput");
 var heightInputElem = $("#heightInput");
 var weightInputElem = $("#weightInput");
@@ -38,10 +39,34 @@ var addActivityModalCloseElem = $(".activity-modal-close");
 var activityCategoryInputElem = $("#activityCategoryInput"); 
 var activityInputElem = $("#activityInput"); 
 var durationInputElem = $("#durationInput");
+var viewWeatherButtonElem = $("#viewWeatherButton"); 
+var getAttributesButtonElem = $("#getAttributesButton"); 
 
 var apiQueryStr = "for breakfast i ate 2 eggs, bacon, and french toast"
 
 var exerciseBoxElem = $("#exerciseBox"); 
+
+var lat; 
+var lon; 
+
+var forecast = {
+   description:"",
+   temp:"", 
+   temp_min:"", 
+   temp_max:"", 
+   deg:"", 
+   direction:"",
+   speed:"", 
+   cloud_cover_pct:""
+}; 
+var weaxCurrTempElem = $("#weaxCurrTemp"); 
+var weaxMinTempElem = $("#weaxMinTemp"); 
+var weaxMaxTempElem = $("#weaxMaxTemp"); 
+var weaxDescriptionElem = $("#weaxDescription"); 
+var weaxWindSpeedElem = $("#weaxWindSpeed");
+var weaxWindDirectionElem = $("#weaxWindDirection");
+var weaxCloudCoverPctElem = $("#weaxCloudCoverPct");
+var weaxIconElem = $("#weaxIcon"); 
 
 // **********************************************
 // functions
@@ -58,7 +83,6 @@ function editActivityInputs (){
    found = false; 
    for (i=0;i<activityList.length; i++){
 
-      //alert ('ip ' + activityInputElem.val() + " list " + activityList[i].activity);   
       if (activityList[i].activity == activityInputElem.val()){
          found = true; 
          break; 
@@ -72,7 +96,6 @@ function editActivityInputs (){
 
    var durationStr = durationInputElem.val().trim (); 
 
-   //alert (durationInputElem.val()); 
    if (durationStr =="" || durationStr == null){
       errorText.text("You must enter a duration. Please retry"); 
       $("#myModal").modal('show');
@@ -151,7 +174,7 @@ function editInputs (){
 function calculateCalsPerDay() {
 
    heightCM = heightInputElem.val() * 2.54; 
-   weightKG = weightInputElem.val () * 0.453592; 
+   weightKG = weightInputElem.val () * 2.205; 
 
    calsPerDay = Math.round ((10 * weightKG) + (6.25 * heightCM) - (5 * ageInputElem.val())); 
    if (genderInputElem.val () == 'Male'){
@@ -175,55 +198,41 @@ function calculateMacros (){
 
    switch(activityLevelInputElem.val()){
    case 'Sedentary':
-      tdee = calsPerDay * 1.2; 
+      tdee = calsPerDay * 1.01; 
       break; 
    case 'Moderate':
-      tdee = calsPerDay * 1.55 
+      tdee = calsPerDay * 1.05;  
       break; 
    case 'Vigorous':
-      tdee = calsPerDay * 1.725; 
+      tdee = calsPerDay * 1.1; 
       break; 
    default: 
-      tdee = calsPerDay * 1.2; 
+      tdee = calsPerDay * 1.01; 
       break; 
    };
    tdee = Math.round(tdee); 
 
    switch(goalInputElem.val()){
    case "Lose Weight":
-      fatPerDay = tdee * .3;
-      carbsPerDay = tdee * .35;
-      proteinPerDay = carbsPerDay;
+      fatPerDay = tdee * .13;
+      carbsPerDay = tdee * .12;
+      proteinPerDay = tdee * .14;
       break;
    case "Gain":
-      fatPerDay = tdee * .2;
-      carbsPerDay = tdee * .5;
-      proteinPerDay = tdee * .3;
+      fatPerDay = tdee * .3;
+      carbsPerDay = tdee * .23;
+      proteinPerDay = tdee * .18;
       break;
    case "Recomp":
-      fatPerDay = tdee * .33;
-      carbsPerDay = tdee * .33;
-      proteinPerDay = tdee * .34;
+      fatPerDay = tdee * .15;
+      carbsPerDay = tdee * .14;
+      proteinPerDay = tdee * .14;
       break;
    }
    fatPerDay = Math.round (fatPerDay / 4); 
    carbsPerDay = Math.round (carbsPerDay / 4); 
    proteinPerDay = Math.round (proteinPerDay / 4);
 
-   /*alert ("age " + ageInputElem.val() 
-      + " height " + heightInputElem.val()
-      + " weight " + weightInputElem.val()
-      + " gender " + genderInputElem.val()
-      + " act level " + activityLevelInputElem.val()
-      + " goal " + goalInputElem.val()
-      + " cpd " + calsPerDay
-      + " tdee " + tdee
-      + " fpd " + fatPerDay
-      + " ppd " + proteinPerDay
-      + " cpd " + carbsPerDay
-      ); 
-   */
-  
    targetCarbsGPDElem.text(carbsPerDay);  
    targetProteinGPDElem.text(proteinPerDay);  
    targetFatGPDElem.text(fatPerDay); 
@@ -231,45 +240,115 @@ function calculateMacros (){
 } // calculateMacros
 
 // **********************************************
-// init 
+// loadActivityHistoryView
 // **********************************************
 
-function init () {
+function loadActivityHistoryView () {
 
-   catList = getActivityCategories();
-   //console.log (catList); 
-   
-   var dayStr = moment().format ('MM/DD/YYYY');
-   loadActivityHistory (0, dayStr); 
-   console.log (activityHistory); 
+   //exerciseBoxElem.empty(); 
 
-   if (activityHistory.length > 0){
+   if (JSON.stringify(activityHistoryView) == null || JSON.stringify(activityHistoryView) == "") {
+      return; 
+   }
 
-      for (i=0; i<activityHistory.length; i++){
+   $(".activityRow").remove();
+   if (activityHistoryView.length > 0){
 
-         var myRow = $('<div class="row">'); 
+      for (i=0; i<activityHistoryView.length; i++){
 
-         var myCol = $('<div class="col-lg-4">'); 
-         myCol.text (activityHistory[i].activity); 
+         var myRow = $('<div class="row activityRow">'); 
+
+         var myCol = $('<div class="col-lg-6">'); 
+         myCol.text (activityHistoryView[i].activity); 
          myRow.append(myCol); 
 
-         var myCol = $('<div class="col-lg-4">'); 
-         myCol.text (activityHistory[i].duration); 
+         var myCol = $('<div class="col-lg-3">'); 
+         myCol.text (activityHistoryView[i].duration_entry); 
          myRow.append(myCol); 
 
-         var myCol = $('<div class="col-lg-4">'); 
-         myCol.text (activityHistory[i].calories_per_activity); 
+         var myCol = $('<div class="col-lg-3">'); 
+         myCol.text (activityHistoryView[i].calories_per_activity); 
          myRow.append(myCol); 
 
          exerciseBoxElem.append(myRow); 
 
       }
-
    }
+} // loadActivityHistoryView
 
-	//$("#myModal").modal('show');
+// **********************************************
+// **********************************************
+
+function getCurrentWeather (){
+
+   var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat="
+      + lat + "&lon=" + lon + "&units=imperial&appid=" + openWeatherKey;
+
+   $.ajax({
+      url: queryURL,
+      method: "GET"
+   }).then(function(response) {
+
+      forecast.description = response.weather[0].description; 
+      forecast.temp = Math.round (response.main.temp);  
+      forecast.temp_min = Math.round (response.main.temp_min); 
+      forecast.temp_max = Math.round (response.main.temp_max); 
+      forecast.deg = response.wind.deg;  
+      forecast.direction = getCardinalDirection(response.wind.deg); 
+      forecast.speed = Math.round (response.wind.speed);  
+      forecast.cloud_cover_pct = response.clouds.all; 
+
+      //console.log (forecast); 
+
+      weaxDescriptionElem.text(forecast.description); 
+      weaxCurrTempElem.text(forecast.temp + '\xB0'); 
+      weaxMinTempElem.text(forecast.temp_min + '\xB0'); 
+      weaxMaxTempElem.text(forecast.temp_max + '\xB0'); 
+
+      weaxWindSpeedElem.text(forecast.speed + 'mph');
+      weaxWindDirectionElem.text(forecast.direction);
+      weaxCloudCoverPctElem.text(forecast.cloud_cover_pct + '%');
+
+      weaxIconElem.attr("src",  "https://openweathermap.org/img/wn/"
+            + response.weather[0].icon 
+            + "@2x.png");
+
+   }); 
+}; // getCurrentWeather
+
+// **********************************************
+// gotta have it. called by getLocation in location.js. (Theres got to be a better way to do this)
+// **********************************************
+
+function locationFound () {
+
+   lat = getLatitude ();
+   lon = getLongitude (); 
+   getCurrentWeather();
+
+}      
+
+// **********************************************
+// init 
+// **********************************************
+
+function init () {
+
+   getLocation(); 
+   catList = getActivityCategories();
 
 }; // init 
+
+// **********************************************
+// Update Actuals with Nutrition Information
+// **********************************************
+
+function UpdateActualsNutrition () {
+   $("#actual-fat").text(Math.round(actualFat));
+   $("#actual-carbs").text(Math.round(actualCarbs));
+   $("#actual-protein").text(Math.round(actualProtein));
+   $("#actual-calories").text(Math.round(actualCalories));
+};
 
 // **********************************************
 // Call Nutritionix
@@ -293,33 +372,96 @@ function CallNutritionix () {
 
       for (i = 0; i<response.foods.length; i++){
 
-         console.log(response.foods[i].food_name);
+         // console.log(response.foods[i].food_name);
 
          //Get the calories, add to actualCalories
          actualCalories += response.foods[i].nf_calories;
-         console.log("calories: " + response.foods[i].nf_calories);
+         // console.log("calories: " + response.foods[i].nf_calories);
 
          //Get the fat, add to actualFat
-         actualFat += response.foods[i].nf_total_fat;
-         console.log("fat: " + response.foods[i].nf_total_fat);
+         actualFat = actualFat + response.foods[i].nf_total_fat;
+         // console.log("fat: " + response.foods[i].nf_total_fat);
 
          //Get the carbs, add to actualCarbs
          actualCarbs += response.foods[i].nf_total_carbohydrate;
-         console.log("carbs: " + response.foods[i].nf_total_carbohydrate);
+         // console.log("carbs: " + response.foods[i].nf_total_carbohydrate);
 
          //Get the protein, add to actualCarbs
          actualProtein += response.foods[i].nf_protein;
-         console.log("protein: " + response.foods[i].nf_protein);
+         // console.log("protein: " + response.foods[i].nf_protein);
       };
 
-      console.log("totals: cal - " + actualCalories + " fat - " + actualFat +  " carbs - " + actualCarbs + " fat - " + actualFat);
-   
+      // console.log("totals: cal - " + actualCalories + " fat - " + actualFat +  " carbs - " + actualCarbs + " fat - " + actualFat);
+      
+      UpdateActualsNutrition();
+
     });
 };
 
 // **********************************************
+// Update Actuals with Exercise Information
+// **********************************************
+
+function UpdateActualsExercise () {
+   var stored = JSON.parse(localStorage.getItem("fitness-app-activities"));
+   if (stored !== null){ // do only if storage is not null
+   
+      var dt = new Date(); //get the current date
+      
+      for (i=0; i<stored.length; i++){ //iterate through the local storage list
+         
+         if (stored[i].date_added == (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear()){ //find entries that match todays date
+            console.log(parseInt(stored[i].calories_per_activity));
+            actualCalories += (parseInt(stored[i].calories_per_activity)) * -1;
+         };
+      };
+   };
+   
+}; // UpdateActualsExercise
+
+// **********************************************
 // listeners
 // **********************************************
+
+// **********************************************
+// get stats button  
+// **********************************************
+
+getAttributesButtonElem.on("click", function () {
+
+   if (nameInputElem.val().trim() == null || nameInputElem.val().trim() == ""){
+      return;
+   }
+   var lsKey = fa_attributes + nameInputElem.val().trim().toLowerCase(); 
+
+   ageInputElem.val("");
+   heightInputElem.val("");
+   weightInputElem.val("");
+   genderInputElem.val("Female");
+   activityLevelInputElem.val("Sedentary");
+   goalInputElem.val("Lose Weight");
+   $(".activityRow").remove();
+
+   var str = localStorage.getItem (lsKey);
+   if (str == null || str == ""){
+      return;
+   }
+   userAttributes = JSON.parse(str);
+
+   ageInputElem.val(userAttributes.age);
+   heightInputElem.val(userAttributes.height);
+   weightInputElem.val(userAttributes.weight);
+   genderInputElem.val(userAttributes.gender);
+   activityLevelInputElem.val(userAttributes.activity_level);
+   goalInputElem.val(userAttributes.goal);
+
+   // does this user have any activity history?
+   var dayStr = moment().format ('MM/DD/YYYY');
+   loadActivityHistory ('today', dayStr, nameInputElem.val().trim().toLowerCase()); 
+   console.log (activityHistory); 
+   loadActivityHistoryView (); 
+
+}); // getAttributesButtonElem.on("click"
 
 // **********************************************
 // calculate button  
@@ -327,14 +469,29 @@ function CallNutritionix () {
 
 calculateBtnElem.on("click", function () {
 
-   //alert ("here"); 
    var validInput = editInputs(); 
    if (validInput == false){
       return;
    }
+
+   // wwrite user data 
+   userAttributes = {
+      age:ageInputElem.val().trim(),  
+      height:heightInputElem.val().trim(),
+      weight:weightInputElem.val().trim(),
+      gender:genderInputElem.val(),
+      activity_level:activityLevelInputElem.val(),
+      goal:goalInputElem.val()
+   }; 
+
+   var lsKey = fa_attributes + nameInputElem.val().trim().toLowerCase();
+
+   var str = JSON.stringify(userAttributes); 
+   localStorage.setItem(lsKey, str); 
+
    calculateMacros();
 
-}); 
+}); // calculateBtnElem.on("click"
 
 // **********************************************
 // experiment with closing a modal 
@@ -356,58 +513,93 @@ addActivityButtonElem.on("click", function () {
    durationInputElem.empty();
    activityInputElem.empty(); 
 
-   //alert ("add activity"); 
    $("#myActivityModal").modal('show');
 
    for (i=0;i<catList.length;i++){
       var newOption = $("<option>")
       newOption.text(catList[i]); 
-      //console.log(newOption); 
       activityCategoryInputElem.append(newOption); 
 
    }
-
 }); 
 
 // **********************************************
-// experiment with closing a modal 
+// open weather modal  
+// **********************************************
+
+viewWeatherButtonElem.on("click", function () {
+
+   $("#myWeatherModal").modal('show');
+
+});
+
+// **********************************************
+// close the activity modal. edit them, add the new one if edits pass   
 // **********************************************
 
 addActivityModalCloseElem.on("click", function () {
 
-   console.log ("user hit OK on activity modal");
-   editActivityInputs(); 
+   var rc = editActivityInputs(); 
+   if (rc==false){
+      return; 
+   }
 
    // convert duration input string to minutes 
    var durationMin = convertDurationToMinutes(durationInputElem.val().trim()); 
-   alert (durationMin); 
 
-}); 
+   // load the object 
+   var dayStr = moment().format ('MM/DD/YYYY');
+   var myActivityObj = {};
+   myActivityObj.date_added = dayStr; 
+   myActivityObj.datetime_added = moment().format ('MM/DD/YYYY HH:mm:ss'); 
+   myActivityObj.activity = activityInputElem.val(); 
+   myActivityObj.duration = durationMin; 
+   myActivityObj.duration_entry = durationInputElem.val().trim(); 
+   myActivityObj.met = getActivityMET (myActivityObj.activity); 
+
+   var calTmp = myActivityObj.met * weightKG;
+   myActivityObj.calories_per_hour = Math.round (calTmp);  
+   myActivityObj.calories_per_activity = Math.round (calTmp * (durationMin / 60));  
+
+   // add it to the viewing structure
+   activityHistoryView.unshift (myActivityObj); 
+   loadActivityHistoryView(); 
+
+   for (i=0;i<activityHistoryView.length;i++){
+      //console.log ('ahv\n' + activityHistoryView[i].activity); 
+   }
+
+   // add it to local storage 
+   activityHistory.unshift (myActivityObj); 
+   var activityStr = JSON.stringify (activityHistory); 
+   localStorage.setItem (fa_activityList + nameInputElem.val().trim().toLowerCase(), activityStr); 
+
+}); // addActivityModalCloseElem.on("click"
+
+// **********************************************
+// **********************************************
 
 activityCategoryInputElem.on("change", function (){
 
    activityInputElem.empty(); 
 
-   //alert ("ok, category selected " + activityCategoryInputElem.val()); 
    var catActivityList = getActivities(activityCategoryInputElem.val()); 
    console.log (catActivityList); 
 
    for (i=0;i<catActivityList.length;i++){
       var newOption = $("<option>")
       newOption.text(catActivityList[i]); 
-      //console.log(newOption); 
       activityInputElem.append(newOption); 
 
    }
 });
-
+ 
 // **********************************************
 // main
 // **********************************************
 
 $(document).ready(function() {
    init ();
-   //alert (convertMinutesToDuration(255)); 
    CallNutritionix();
+   UpdateActualsExercise();
 });
-

@@ -2,8 +2,31 @@
 // keys for localStorage
 // **********************************************
 var fa_act = "fitness-app-activities";
+var fa_activityList = "fa-activities-";
+var fa_attributes = "fa-attributes-";
+var openWeatherKey = "642722fdfe11197400af4a85e9c528a0"; 
 
-var activityHistory = [];
+var activityHistory = [];        // all history, used to storing 
+var activityHistoryView = [];    // today only, optionally. This will be what the user sees
+
+// **********************************************
+// user attribute structure 
+// **********************************************
+
+var userAttributes; 
+
+/*
+userAttributes = {
+   "age":"",
+   "height":"",
+   "weight":"",
+   "gender":"",
+   "activity_level":"",
+   "goal":""
+}
+// **********************************************
+// activity structure 
+// **********************************************
 /* = [
    // bicycling 
    {
@@ -11,10 +34,10 @@ var activityHistory = [];
       "datetime_added":"", 
       "activity":"",
       "duration":"", 
+      "duration_entry","",
       "met",
       "calories_per_hour":"",
       "calories_per_activity":""}];
-
 */
 
 // **********************************************
@@ -223,6 +246,22 @@ var activityList = [
 // **********************************************
 // **********************************************
 
+function getActivityMET (activity) {
+
+console.log ("getActivityMET " + activity); 
+
+   for (i=0; i<activityList.length; i++){
+
+      if (activityList[i].activity == activity) {
+         return activityList[i].met; 
+      }
+
+   }
+} // getActivityMET
+
+// **********************************************
+// **********************************************
+
 function getActivityCategories () {
 
    var catList = []; 
@@ -232,7 +271,7 @@ function getActivityCategories () {
       }
    }
    return catList; 
-}
+} // getActivityCategories
 
 // **********************************************
 // **********************************************
@@ -245,7 +284,7 @@ function getActivities (category){
       }
    }
    return catActivityList;
-}
+} // getActivities
 
 // **********************************************
 // convert hh:mm or :mm string to number of minutes 
@@ -265,7 +304,7 @@ function getNumHours (durationStr){
    var numHours = durationStr.slice(0,colonPos);
    return numHours; 
 
-}
+} // getNumHours
 
 function getNumMinutes (durationStr){
 
@@ -275,7 +314,7 @@ function getNumMinutes (durationStr){
    }
    var numMinutes = durationStr.slice (colonPos + 1); 
    return numMinutes; 
-}
+} // getNumMinutes
 
 // **********************************************
 // convert number of minutes to hh:mm or :mm string 
@@ -316,39 +355,77 @@ function convertDurationToMinutes (durationStr){
 } // convertDurationToMinutes
 
 // **********************************************
-// load activity history, pass 0 for today, 1 for all 
+// load activity history, pass 'today' or 'all' 
 // **********************************************
 
-function loadActivityHistory (todayOrAll, activityDay) {
+function loadActivityHistory (todayOrAll, activityDay, uName) {
 
-   var activityStr = localStorage.getItem (fa_act);
+   var activityStr = localStorage.getItem (fa_activityList + uName);
+   if (activityStr == null || activityStr == "") {
+      return;
+   }
+
    activityHistory.length = 0;
-   activityHistoryTmp = activityHistory;   
-   activityHistoryTmp = JSON.parse(activityStr); 
+   activityHistory = JSON.parse(activityStr); 
+   activityHistoryView.length=0; 
+   if (todayOrAll == 'today'){
 
-   if (todayOrAll == 0){
+      for (i=0; i<activityHistory.length; i++){
+  
+         //alert ("data " + activityHistory[i].date_added + " argument " + activityDay); 
 
-      for (i=0; i<activityHistoryTmp.length; i++){
-
-         alert ("data " + activityHistoryTmp[i].date_added + " argument " + activityDay); 
-
-         if (activityHistoryTmp[i].date_added == activityDay){
-            activityHistory.push (activityHistoryTmp[i]);  
+         if (activityHistory[i].date_added == activityDay){
+            activityHistoryView.push (activityHistory[i]);  
          }
       }
    }
    else {
-      activityHistory = activityHistoryTmp; 
+      activityHistoryView = activityHistory; 
    }
 }; // loadActivityHistory 
 
+// **********************************************
+// this is related to the openWeather data
+// **********************************************
+
+function getCardinalDirection (deg){
+   if (deg >= 000 && deg <= 020){
+      return 'North';
+   }
+   else if (deg >= 021 && deg <= 070){
+      return 'NorthEast';
+   }
+   else if (deg >= 071 && deg <= 115){
+      return 'East';
+   }
+   else if (deg >= 116 && deg <= 150){
+      return 'SouthEast';
+   }
+   else if (deg >= 151 && deg <= 200){
+      return 'South';
+   }
+   else if (deg >= 201 && deg <= 250){
+      return 'SouthWest';
+   }
+   else if (deg >= 251 && deg <= 290){
+      return 'West';
+   }
+   else if (deg >= 291 && deg <= 340){
+      return 'NorthWest';
+   }
+   else if (deg >= 341 && deg <= 360){
+      return 'North';
+   }
+}
+
+// **********************************************
+// **********************************************
+
 /*
-
 var dayStr = moment().format ('MM/DD/YYYY');
-
 var myActivityObj = {
-   "date_added":"12/27/2019",
-   "datetime_added":"12/27/2019 14:00",
+   "date_added":"1/4/2020",
+   "datetime_added":"1/4/2020 14:00",
    "activity":"Weight Training",
    "duration":"90", 
    "met":"5",
@@ -356,10 +433,9 @@ var myActivityObj = {
    "calories_per_activity":"682.5" 
 };
 activityHistory.push (myActivityObj);
-
 var myActivityObj = {
-   "date_added":"12/27/2019",
-   "datetime_added":"12/27/2019 10:45",
+   "date_added":"1/4/2020",
+   "datetime_added":"1/4/2020 10:45",
    "activity":"Rowing",
    "duration":"45", 
    "met":"4.8",
@@ -367,10 +443,9 @@ var myActivityObj = {
    "calories_per_activity":"327.6" 
 };
 activityHistory.push (myActivityObj);
-
 var myActivityObj = {
-   "date_added":"12/26/2019",
-   "datetime_added":"12/26/2019 18:00",
+   "date_added":"1/4/2020",
+   "datetime_added":"1/4/2020 18:00",
    "activity":"Bowling",
    "duration":"120", 
    "met":"3.8",
@@ -378,12 +453,7 @@ var myActivityObj = {
    "calories_per_activity":"691.6" 
 };
 activityHistory.push (myActivityObj);
-
 var activityStr = JSON.stringify(activityHistory); 
 console.log (activityStr); 
 localStorage.setItem(fa_act, activityStr); 
-
-*/
-
-
-
+*/ 
