@@ -24,7 +24,6 @@ userAttributes = {
    "activity_level":"",
    "goal":""
 }
-
 // **********************************************
 // activity structure 
 // **********************************************
@@ -39,7 +38,6 @@ userAttributes = {
       "met",
       "calories_per_hour":"",
       "calories_per_activity":""}];
-
 */
 
 // **********************************************
@@ -425,7 +423,6 @@ function getCardinalDirection (deg){
 
 /*
 var dayStr = moment().format ('MM/DD/YYYY');
-
 var myActivityObj = {
    "date_added":"1/4/2020",
    "datetime_added":"1/4/2020 14:00",
@@ -436,7 +433,6 @@ var myActivityObj = {
    "calories_per_activity":"682.5" 
 };
 activityHistory.push (myActivityObj);
-
 var myActivityObj = {
    "date_added":"1/4/2020",
    "datetime_added":"1/4/2020 10:45",
@@ -447,7 +443,6 @@ var myActivityObj = {
    "calories_per_activity":"327.6" 
 };
 activityHistory.push (myActivityObj);
-
 var myActivityObj = {
    "date_added":"1/4/2020",
    "datetime_added":"1/4/2020 18:00",
@@ -458,10 +453,7 @@ var myActivityObj = {
    "calories_per_activity":"691.6" 
 };
 activityHistory.push (myActivityObj);
-
 var activityStr = JSON.stringify(activityHistory); 
 console.log (activityStr); 
 localStorage.setItem(fa_act, activityStr); 
-
 */ 
-

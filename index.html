@@ -1,360 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- **************************************** -->
-<!-- **************************************** -->
 <head>
-
-   <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
-   <title>Fitness App</title>
-
-   <!--css links-->
-   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-   <link rel="stylesheet" type="text/css" href="./assets/style.css">
+<title>The Fitness App</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="./assets/bootstrap.min.css" />
+<link rel="stylesheet" href="./assets/bootstrap-responsive.min.css" />
+<link rel="stylesheet" type="text/css" href="./assets/style.css">
 
 </head>
+<body>
+
+<!--Header-part-->
+<div id="header">
+  <h1>Fitness App</h1>
+</div>
+
+<!--top-Header-menu-->
+<div class="nav">
+
+</div>
+
+<!--close-top-Header-menu-->
 
 <!-- **************************************** -->
 <!-- **************************************** -->
-<body>
 
    <!-- *****************************************
    modal for edit errors
    *******************************************-->
 
    <div id="myModal" class="modal fade" tabindex="-1">
-      <div class="modal-dialog">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title">Error!</h5>
-               <button type="button" class="close error-modal_close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-               <p id="myModalErrorText">placeholder text</p>
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-info error-modal_close" data-dismiss="modal">Ok</button>
-            </div>
-         </div>
-      </div>
-   </div> <!--myModal-->
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title">Error!</h5>
+             <button type="button" class="close error-modal_close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+             <p id="myModalErrorText">placeholder text</p>
+          </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-info error-modal_close" data-dismiss="modal">Ok</button>
+          </div>
+       </div>
+    </div>
+ </div> <!--myModal-->
 
-   <!-- *****************************************
-   modal for activity input 
-   *******************************************-->
+ <!-- *****************************************
+ modal for activity input 
+ *******************************************-->
 
-   <div id="myActivityModal" class="modal fade" tabindex="-1">
-      <div class="modal-dialog">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title activity-modal">Select Activity</h5>
-               <button type="button" class="close activity-modal-close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
+ <div id="myActivityModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title activity-modal">Select Activity</h5>
+             <button type="button" class="close activity-modal-close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
 
-               <div class="row"> <!-- activity input row -->
-  
-                  <div class="form-group col-lg-4">
-                     <label for="activityCategoryInput">Select Category:</label>
-                     <select class="form-control" id="activityCategoryInput">
-                        <option>Lose Weight</option>
-                     </select>
-                  </div>
+             <div class="row"> <!-- activity input row -->
 
-                  <div class="form-group col-lg-4">
-                     <label for="activityInput">Select Activity:</label>
-                     <select class="form-control" id="activityInput">
-                        <option>Lose Weight</option>
-                     </select>
-                  </div>
+                <div class="form-group col-lg-4">
+                   <label for="activityCategoryInput">Select Category:</label>
+                   <select class="form-control" id="activityCategoryInput">
+                      <option>Lose Weight</option>
+                   </select>
+                </div>
 
-                  <div class="form-group col-lg-4">
-                     <label for="durationInput">Select Duration:</label>
-                     <input type="text" id="durationInput" placeholder="hh:mm, :mm">
-                  </div>
+                <div class="form-group col-lg-4">
+                   <label for="activityInput">Select Activity:</label>
+                   <select class="form-control" id="activityInput">
+                      <option>Lose Weight</option>
+                   </select>
+                </div>
 
-               </div> <!-- activity input row -->
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-info activity-modal-close" data-dismiss="modal">Ok</button>
-            </div>
-         </div>
-      </div>
-   </div> <!--myModal-->
+                <div class="form-group col-lg-4">
+                   <label for="durationInput">Select Duration:</label>
+                   <input type="text" id="durationInput" placeholder="hh:mm, :mm">
+                </div>
 
-   <!-- *****************************************
-   modal for weather
-   *******************************************-->
+             </div> <!-- activity input row -->
+          </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-info activity-modal-close" data-dismiss="modal">Ok</button>
+          </div>
+       </div>
+    </div>
+ </div> <!--myModal-->
 
-   <div id="myWeatherModal" class="modal fade" tabindex="-1">
-      <div class="modal-dialog">
-         <div class="modal-content">
+ <!-- *****************************************
+ modal for weather
+ *******************************************-->
 
-            <div class="modal-header">
-               <h3 class="modal-title"></h3>
-               <button type="button" class="close error-modal_close" data-dismiss="modal">&times;</button>
-            </div>
+ <div id="myWeatherModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+       <div class="modal-content">
 
-            <div class="modal-body">
+          <div class="modal-header">
+             <h3 class="modal-title"></h3>
+             <button type="button" class="close error-modal_close" data-dismiss="modal">&times;</button>
+          </div>
 
-               <h4>Today's Weather</h4> 
-               <div class="row">
-                  <div class="col">
-                     <h4 id ="weaxDescription"></h4>
-                  </div>
-                  <div class="col">
-                     <img id="weaxIcon" src="assets/img/placeholderIcon.png" alt="img not found">
-                  </div>
-               </div>
-               <hr>
+          <div class="modal-body">
 
-               <h4>Temperatures</h4>
-               <div class="row">
-                  <div class="col">
-                     <h6>Min</h6><p id="weaxCurrTemp"></p>
-                  </div>
-                  <div class="col">
-                     <h6>Min</h6><p id="weaxMinTemp"></p>
-                  </div>
-                  <div class="col">
-                     <h6>Max</h6><p id="weaxMaxTemp"></p>
-                  </div>
-               </div>
-               <hr>
+             <h4>Today's Weather</h4> 
+             <div class="row">
+                <div class="col">
+                   <h4 id ="weaxDescription"></h4>
+                </div>
+                <div class="col">
+                   <img id="weaxIcon" src="assets/img/placeholderIcon.png" alt="img not found">
+                </div>
+             </div>
+             <hr>
 
-               <h4>Wind</h4>
-               <div class="row">
-                  <div class="col">
-                     <h6>Speed</h6><p id="weaxWindSpeed"></p>
-                  </div>
-                  <div class="col">
-                     <h6>From The</h6><p id="weaxWindDirection"></p>
-                  </div>
-                  <div class="col">
-                     <h6>Cloud Cover</h6><p id="weaxCloudCoverPct"></p>
-                  </div>
-               </div>
+             <h4>Temperatures</h4>
+             <div class="row">
+                <div class="col">
+                   <h6>Min</h6><p id="weaxCurrTemp"></p>
+                </div>
+                <div class="col">
+                   <h6>Min</h6><p id="weaxMinTemp"></p>
+                </div>
+                <div class="col">
+                   <h6>Max</h6><p id="weaxMaxTemp"></p>
+                </div>
+             </div>
+             <hr>
 
-               <!--<p id="myWeatherModalText">placeholder text</p>-->
-            </div>
+             <h4>Wind</h4>
+             <div class="row">
+                <div class="col">
+                   <h6>Speed</h6><p id="weaxWindSpeed"></p>
+                </div>
+                <div class="col">
+                   <h6>From The</h6><p id="weaxWindDirection"></p>
+                </div>
+                <div class="col">
+                   <h6>Cloud Cover</h6><p id="weaxCloudCoverPct"></p>
+                </div>
+             </div>
 
-            <div class="modal-footer">
-               <button type="button" class="btn btn-info error-modal_close" data-dismiss="modal">Ok</button>
-            </div>
+             <!--<p id="myWeatherModalText">placeholder text</p>-->
+          </div>
 
-         </div>
-      </div>
-   </div> <!--myWeatherModal-->
+          <div class="modal-footer">
+             <button type="button" class="btn btn-info error-modal_close" data-dismiss="modal">Ok</button>
+          </div>
+
+       </div>
+    </div>
+ </div> <!--myWeatherModal-->
 
 
-   <!-- *****************************************
-   main part of the body 
-   *******************************************-->
-
-   <div class="container">
-
+  <!--End of MODALS -->
+<div id="content">
+  <div class="container">
       <!--jumbotron-->
       <div class="jumbotron">
-         <div class="row jRow1">
-            <div class="col col-lg-4">
-               <h3 class="text-left">Macro Attributes</h3>
-            </div>
-            <div class="col col-lg-4" id="col-nameInput">
-               <input class="ipTextCol" type="text" id="nameInput" placeholder="who are you?">
-            </div>
-            <div class="col col-lg-4" id="col-nameInput">
-               <button class="btn btn-info btn-sm" type="button" id ="getAttributesButton">
-                  Get Your Stats
-               </button>
-            </div>
-         </div>
+        <div class="row jRow1">
+          <div class="col col-lg-4">
+        <h3 class="text-left">
+           Macro Attributes
+        </h3>
+      </div>
+      <div class="col col-lg-4" id="nameInput">
+        <input class="inTextCol" type="text" id="nameInput" placeholder="Who are you?">
+      </div>
+      <div class="col col-lg-4" id="col-nameInput">
+        <button class="btn btn-info btn-sm" type="button" id="getAttributesButton" >
+          Get Your Stats </button>
+      </div>
+    </div>
+        <div class="row" id="inputText">
+           <div class="col col-lg-offset-2">
+              <input class="ipTextCol" type="text" id="ageInput" placeholder="age">
+           </div>
+           <div class="col col-lg-offset-2">
+              <input class="ipTextCol" type="text" id="heightInput" placeholder="height (inches)">
+           </div>
+           <div class="col col-lg-offset-2">
+              <input class="ipTextCol" type="text" id="weightInput" placeholder="weight (lbs)">
+           </div>
+        </div>
 
-         <div class="row" id="inputText">
-            <div class="col col-lg-offset-2">
-               <input class="ipTextCol" type="text" id="ageInput" placeholder="age">
-            </div>
-            <div class="col col-lg-offset-2">
-               <input class="ipTextCol" type="text" id="heightInput" placeholder="height (inches)">
-            </div>
-            <div class="col col-lg-offset-2">
-               <input class="ipTextCol" type="text" id="weightInput" placeholder="weight (lbs)">
-            </div>
-         </div>
+        <div class="row">
+        <div class="form-group col-lg-4">
+           <label for="genderInput">Gender:</label>
+           <select class="form-control" id="genderInput">
+              <option>Female</option>
+              <option>Male</option>
+           </select>
+        </div>
 
-         <div class="row">
-         <div class="form-group col-lg-4">
-            <label for="genderInput">Gender:</label>
-            <select class="form-control" id="genderInput">
-               <option>Female</option>
-               <option>Male</option>
-            </select>
-         </div>
+        <div class="form-group col-lg-4">
+           <label for="activityLevelInput">Activity Level:</label>
+           <select class="form-control" id="activityLevelInput">
+              <option>Sedentary</option>
+              <option>Moderate</option>
+              <option>Vigorous</option>
+           </select>
+        </div>
 
-         <div class="form-group col-lg-4">
-            <label for="activityLevelInput">Activity Level:</label>
-            <select class="form-control" id="activityLevelInput">
-               <option>Sedentary</option>
-               <option>Moderate</option>
-               <option>Vigorous</option>
-            </select>
-         </div>
+        <div class="form-group col-lg-4">
+           <label for="goalInput">Goal:</label>
+           <select class="form-control" id="goalInput">
+              <option>Lose Weight</option>
+              <option>Gain</option>
+              <option>Recomp</option>
+           </select>
+        </div>
+        </div> <!--jumbotron row for dropdowns-->
 
-         <div class="form-group col-lg-4">
-            <label for="goalInput">Goal:</label>
-            <select class="form-control" id="goalInput">
-               <option>Lose Weight</option>
-               <option>Gain</option>
-               <option>Recomp</option>
-            </select>
-         </div>
-         </div> <!--jumbotron row for dropdowns-->
+        <button class="btn btn-info" type="button" id ="calculateButton">
+           Calculate
+        </button>
 
-         <button class="btn btn-info btn-sm" type="button" id ="calculateButton">
-            Calculate
-         </button>
+     <!--<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" 
+     title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 
+     title="Flaticon">www.flaticon.com</a>
+     </div>-->
 
-      <!--<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" 
-      title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 
-      title="Flaticon">www.flaticon.com</a>
-      </div>-->
-
-      </div> <!--jumbotron-->
-
-      <!-- **************************************
-           exercise box and target macro values
-      ****************************************-->
-      <div class="row" id="exerciseAndTargetsRow">
-
-         <div class="col-lg-5">
-            <div id="exerciseBox">
-
-               <i id="exerciseLabel" class="fas fa-running">Exercise</i>
-               <button class="btn btn-info btn-sm" type="button" id ="addActivityButton">
-                  Add
-               </button>
-               <button class="btn btn-info btn-sm" type="button" id ="viewWeatherButton">
-                  Forecast
-               </button>
-               <div class="row">
-                  <div class="col-lg-6">
-                     <strong>Activity</strong>
+     </div> <!--jumbotron-->
+ 
+  <div class="container-fluid">
+   
+   
+   <div class="row-fluid">
+    <div class="widget-box">
+      <div class="widget-title">
+        <h5>Daily Tracking</h5>
+        <div class="buttons"></div> </div>
+      <div class="widget-content">
+        <div class="row-fluid">
+          <div class="row-fluid">
+            <div class="span7">
+              <div class="widget-box">
+                <div class="widget-title">
+                  <h5>Activities</h5>   
                   </div>
-                  <div class="col-lg-3">
-                     <strong>Duration</strong>
+                <div class="widget-content nopadding"> 
+                  <div class="row-fluid" id="exerciseAndTargetsRow">  
+                    <div class="col-lg-5">
+                          <i id="exerciseLabel" class="fas fa-running">Exercise</i>
+                          <button class="btn btn-info btn-sm" type="button" id ="addActivityButton">
+                             Add
+                          </button>
+                          <button class="btn btn-info btn-sm" type="button" id ="viewWeatherButton">
+                             Forecast
+                          </button>
+                          <div class="row">
+                             <div class="col-lg-3">
+                                <strong>Activity</strong>
+                             </div>
+                             <div class="col-lg-3">
+                                <strong>Duration</strong>
+                             </div>
+                             <div class="col-lg-3">
+                                <strong>Calories</strong>
+                             </div>
+                          </div>
+                    </div>
                   </div>
-                  <div class="col-lg-3">
-                     <strong>Calories</strong>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+              <ul class="widget-box">
+                <ul>
+                  <h5 style="text-align:center">Target</h5>
+                  <div class="left peity_bar_neutral"> <img src="./assets/img/fat.png" alt="image not found">
+                    <canvas width="50" height="24"></canvas>
+                    <h5 id="target-fat-gpd">0.0</h5></div>
+                  <div class="right"> <h5 class="gpdText">Fat grams per day</h5 class="gpdText">  </div>
+                </ul>
+                <ul>
+                  <div class="left peity_line_neutral"><img src="./assets/img/carbohydrates.png" alt="image not found">
+                    <canvas width="50" height="24"></canvas>
+                    <h5 id="target-carbs-gpd">0.0</h5></div>
+                  <div class="right"> <h5 class="gpdText">Carb grams per day</h5 class="gpdText">  </div>
+                </ul>
+                <ul>
+                  <div class="left peity_bar_bad"><img src="./assets/img/protein.png" alt="image not found">
+                    <canvas width="50" height="24"></canvas>
+                    <h5 id="target-protein-gpd">0.0</h5></div>
+                  <div class="right"> <h5 class="gpdText">Protein grams per day</h5 class="gpdText"> </div>
+                </ul>
+                <ul>
+                  <div class="left peity_line_good"><img src="./assets/img/calories.png" alt="image not found">
+                    <canvas width="50" height="24"></canvas>
+                    <h5 id="target-calories-gpd">0.0</h5></div>
+                  <div class="right"> <h5 class="gpdText">Total calories per day</h5 class="gpdText"> </div>
+                </ul>
+              </ul>
+            </div>
+            <div class="span3">
+              <ul class="widget-box">
+                <ul>
+                  <h5>Actuals</h5>
+                  <div class="left peity_bar_neutral"><img src="./assets/img/fat.png" alt="image not found">
+                    <canvas width="50" height="24"></canvas>
+                    <h5 id="actual-fat">0.0</h5></div>
+                  <div class="right"> <h5 class="gpdText">Ttl Fat grams</h5 class="gpdText"> </div>
+                </ul>
+                <ul>
+                  <div class="left peity_line_neutral"><img src="./assets/img/carbohydrates.png" alt="image not found">
+                    <canvas width="50" height="24"></canvas>
+                    <h5 id="actual-carbs">0.0</h5></div>
+                  <div class="right">  <h5 class="gpdText">Ttl Carb grams</h5> </div>
+                </ul>
+                <ul>
+                  <div class="left peity_bar_bad"><img src="./assets/img/protein.png" alt="image not found">
+                    <canvas width="50" height="24"></canvas>
+                    <h5 id="actual-protein">0</h5></div>
+                  <div class="right"> <h5 class="gpdText">Ttl Protein grams</h5 class="gpdText"> </div>
+                </ul>
+                <ul>
+                  <div class="left peity_line_good"> <img src="./assets/img/calories.png" alt="image not found">
+                    <canvas width="50" height="24"></canvas>
+                    <h5 id="actual-calories">0</h5></div>
+                  <div class="right"><h5 class="gpdText">Ttl Calories</h5 class="gpdText"> </div>
+                </ul>
+              </ul>
+            </div>
+          </div>
+            <div class="row-fluid">
+              <div class="span7">
+                <div class="widget-box">
+                  <div class="widget-title"></span>
+                    <h5>Nutrition</h5>
+                    </div>
+                  <div class="widget-content nopadding">
+                    <canvas width="650" height="300">
+                    </canvas>
                   </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div class="row-fluid">
+  <div id="footer" class="span12"> 2020 &copy; Fitness App is brought to you by Team Always Hungry</a> </div>
+</div>
 
-               </div>
+<script src="js/jquery.min.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="   crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="./assets/location.js"></script>
+<script src="./assets/dataStructures.js"></script>
+<script src="./assets/script.js"></script>
 
-            </div>
-         </div>
-
-         <div class="col-lg-7">
-            <div class="row">
-               <h4 id="targetsHdr">Targets</h4>
-            </div>
-
-            <div class="row">
-
-               <div class="col-lg-3">
-                  <h5>Fat</h5>
-                  <img src="./assets/img/fat.png" alt="image not found">
-                  <h5 id="target-fat-gpd"></h5>
-                  <h5 class="gpdText">grams per day</h5 class="gpdText">
-               </div>
-               <div class="col-lg-3">
-                  <h5>Carbs</h5>
-                  <img src="./assets/img/carbohydrates.png" alt="image not found">
-                  <h5 id="target-carbs-gpd"></h5>
-                  <h5 class="gpdText">grams per day</h5 class="gpdText">
-               </div>
-               <div class="col-lg-3">
-                  <h5>Protein</h5>
-                  <img src="./assets/img/protein.png" alt="image not found">
-                  <h5 id="target-protein-gpd"></h5>
-                  <h5 class="gpdText">grams per day</h5 class="gpdText">
-               </div>
-               <div class="col-lg-3">
-                  <h5>Calories</h5>
-                  <img src="./assets/img/calories.png" alt="image not found">
-                  <h5 id="target-calories-gpd"></h5>
-                  <h5 class="gpdText">per day</h5 class="gpdText">
-               </div>
-            </div>
-         </div>
-
-      </div> <!--exerciseAndTargetsRow-->
-
-      <br>
-      
-      <!-- **************************************
-           nutrition box and actual macro values
-      ****************************************-->
-      <div class="row" id="foodAndActualsRow">
-         <div class="col-lg-5">
-               <i id="nutritionabel" class="form-control">Nutrition</i>
-               <button class="btn btn-info btn-sm" type="button" id ="addActivityButton">
-                  Add Food
-               </button>
-            <div id="foodBox"></div>
-         </div>
-
-         <div class="col-lg-7">
-            <div class="row">
-               <h4 id="targetsHdr">Actuals</h4>
-            </div>
-
-            <div class="row">
-
-               <div class="col-lg-3">
-                  <h5>Fat</h5>
-                  <img src="./assets/img/fat.png" alt="image not found">
-                  <h5 id="actual-fat">0.0</h5>
-                  <h5 class="gpdText">grams</h5 class="gpdText">
-               </div>
-               <div class="col-lg-3">
-                  <h5>Carbs</h5>
-                  <img src="./assets/img/carbohydrates.png" alt="image not found">
-                  <h5 id="actual-carbs">0.0</h5>
-                  <h5 class="gpdText">grams</h5>
-               </div>
-               <div class="col-lg-3">
-                  <h5>Protein</h5>
-                  <img src="./assets/img/protein.png" alt="image not found">
-                  <h5 id="actual-protein">0</h5>
-                  <h5 class="gpdText">grams</h5 class="gpdText">
-               </div>
-               <div class="col-lg-3">
-                  <h5>Calories</h5>
-                  <img src="./assets/img/calories.png" alt="image not found">
-                  <h5 id="actual-calories">0</h5>
-                  <!-- <h5 class="gpdText"></h5 class="gpdText"> -->
-               </div>
-
-            </div>
-         </div>
-      </div> <!--foodAndActualsRow-->
-
-  </div> <!--container-->
-
-   <!--**************************************-->
-   <!--js links-->
-   <!--**************************************-->
-   <script src="https://code.jquery.com/jquery-3.4.1.min.js"   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="   crossorigin="anonymous"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-   <script src="./assets/location.js"></script>
-   <script src="./assets/dataStructures.js"></script>
-   <script src="./assets/script.js"></script>
-
-<!-- **************************************** -->
-<!-- **************************************** -->
 </body>
 </html>
