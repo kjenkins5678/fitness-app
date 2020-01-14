@@ -403,14 +403,15 @@ function CallNutritionix () {
 // **********************************************
 
 function UpdateActualsExercise () {
-   var stored = JSON.parse(localStorage.getItem("fa-activities-"));
+   var stored = JSON.parse(localStorage.getItem("fa-activities-" + nameInputElem.val().trim().toLowerCase()));
+   //alert (localStorage.getItem("fa-activities-" + nameInputElem.val().trim().toLowerCase()));
    if (stored !== null){ // do only if storage is not null
-   
+
       var dt = new Date(); //get the current date
       
       for (i=0; i<stored.length; i++){ //iterate through the local storage list
-         
-         if (stored[i].date_added == (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear()){ //find entries that match todays date
+         //alert (moment().format ('MM/DD/YYYY'));
+         if (stored[i].date_added == moment().format ('MM/DD/YYYY')){ //find entries that match todays date
             actualCalories += (parseInt(stored[i].calories_per_activity)) * -1;
          };
       };
@@ -572,6 +573,16 @@ addActivityModalCloseElem.on("click", function () {
    activityHistory.unshift (myActivityObj); 
    var activityStr = JSON.stringify (activityHistory); 
    localStorage.setItem (fa_activityList + nameInputElem.val().trim().toLowerCase(), activityStr); 
+
+/*
+   var actualFat = 0;
+   var actualCarbs = 0;
+   var actualProtein = 0;
+   var actualCalories = 
+*/
+   UpdateActualsExercise();
+   //alert (actualCalories); 
+   UpdateActualsNutrition();
 
 }); // addActivityModalCloseElem.on("click"
 
